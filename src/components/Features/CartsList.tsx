@@ -1,22 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useContext } from 'react'
 import useFetchData from '../../hooks/useFetchData'
-import { Cart } from '../../types'
 import CartsListItem from './CartsListItem'
 import s from './CartsList.module.scss'
+import CartsContext from '../../context/CartsContext'
 
 const CartsList = () => {
-  const [carts, setCarts] = useState<Cart[]>([])
-  const { sendRequest, loading, error } = useFetchData()
+  const { loading, error } = useFetchData()
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { carts } = await sendRequest('https://dummyjson.com/carts')
-        setCarts(carts)
-      } catch (err) {}
-    }
-    fetchData()
-  }, [sendRequest])
+  const { carts } = useContext(CartsContext)
 
   const renderCartsListItems = carts.map(({ id, totalProducts, total }) => {
     return (
