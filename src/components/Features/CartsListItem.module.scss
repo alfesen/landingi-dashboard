@@ -1,0 +1,19 @@
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2a0842;
+  width: 100%;
+  transition: background-color .2s;
+  &__id {
+    padding: 1em 1.5em;
+  }
+  &__info {
+    padding: 1em 1.5em;
+  }
+
+  &:hover {
+    background-color: #542a72;
+    cursor: pointer;
+  }
+}
