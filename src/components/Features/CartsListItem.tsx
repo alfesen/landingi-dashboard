@@ -4,14 +4,20 @@ import { CartsListItem as PropsType } from '../../types'
 import s from './CartsListItem.module.scss'
 
 const CartsListItem = ({ id, totalProducts, totalAmount }: PropsType) => {
-  const { removeCart } = useContext(CartsContext)
+  const { removeCart, setCurrentCart } = useContext(CartsContext)
 
   const removeCartHandler = (e: MouseEvent) => {
     removeCart(id)
   }
 
   return (
-    <li className={s['list-item']} aria-label='carts-list-item' key={id}>
+    <li
+      onClick={() => {
+        setCurrentCart(id)
+      }}
+      className={s['list-item']}
+      aria-label='carts-list-item'
+      key={id}>
       <h4 className={s['list-item__id']}>{id}</h4>
       <div className={s['list-item__info']}>
         <p>
