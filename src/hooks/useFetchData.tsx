@@ -10,19 +10,16 @@ const useFetchData = () => {
     try {
       const response = await fetch(url)
       responseData = await response.json()
-      if (!response.ok) {
-        const errorText = 'Failed to fetch data'
-        setError(errorText)
-        throw new Error(errorText)
-      }
     } catch (err) {
-      console.log(err)
+      const errorText = 'Failed to fetch data'
+      setError(errorText)
+      throw new Error(errorText)
     }
 
     setLoading(false)
     return responseData
   }, [])
-  
+
   return { sendRequest, loading, error }
 }
 
