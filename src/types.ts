@@ -17,3 +17,9 @@ export type Cart = {
   totalQuantity: number
   userId: number
 }
+
+export type CartsListItem = {
+  id: number
+  totalAmount: number
+  totalProducts: number
+}

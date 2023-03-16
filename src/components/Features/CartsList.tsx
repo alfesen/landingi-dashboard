@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import useFetchData from '../../hooks/useFetchData'
 import { Cart } from '../../types'
+import CartsListItem from './CartsListItem'
 
 const CartsList = () => {
   const [carts, setCarts] = useState<Cart[]>([])
@@ -16,12 +17,22 @@ const CartsList = () => {
     fetchData()
   }, [sendRequest])
 
-  console.log(carts)
-  
+  const renderCartsListItems = carts.map(({ id, totalProducts, total }) => {
+    return (
+      <CartsListItem
+        key={`${id}_cart_list_item_key`}
+        id={id}
+        totalAmount={total}
+        totalProducts={totalProducts}
+      />
+    )
+  })
+
   return (
     <div>
       {loading && <p>loading</p>}
       {error && <p style={{ color: 'red' }}>{error}</p>}
+      {!loading && !error && renderCartsListItems}
     </div>
   )
 }
