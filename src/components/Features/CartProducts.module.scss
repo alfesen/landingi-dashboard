@@ -1,0 +1,9 @@
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 3rem 5rem;
+  width: 100%;
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow: scroll;
+}

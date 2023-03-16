@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import CartsContext from '../../context/CartsContext'
 import { Product } from '../../types'
 import CartProductsItem from './CartProductsItem'
+import s from './CartProducts.module.scss'
 
 const CartProducts = () => {
   const { carts, currentCart } = useContext(CartsContext)
@@ -13,7 +14,7 @@ const CartProducts = () => {
   }, [currentCart, carts])
 
   return (
-    <div>
+    <div className={s.products}>
       {thisCart?.products.map(
         ({
           id,

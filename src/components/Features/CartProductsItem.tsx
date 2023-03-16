@@ -1,4 +1,5 @@
 import { Product } from '../../types'
+import s from './CartProductsItem.module.scss'
 
 const CartProductsItem = ({
   id,
@@ -10,25 +11,25 @@ const CartProductsItem = ({
   total,
 }: Product) => {
   return (
-    <div>
-      <h3>
+    <div className={s['product-item']}>
+      <h3 className={s['product-item__heading']}>
         {id}. {title}
       </h3>
       <div>
-        <p>
+        <p className={s['product-item__info']}>
           Price: <span>${price}</span>
         </p>
-        <p>
+        <p className={s['product-item__info']}>
           Discount: <span>{discountPercentage}%</span>
         </p>
-        <p>
+        <p className={s['product-item__info']}>
           Discounted Price: <span>${discountedPrice}</span>
         </p>
-        <p>
+        <p className={s['product-item__info']}>
           Quantity: <span>{quantity}</span>
         </p>
       </div>
-      <h4>
+      <h4 className={s['product-item__total']}>
         Total <span>${total}</span>
       </h4>
     </div>
