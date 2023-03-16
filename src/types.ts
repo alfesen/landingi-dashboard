@@ -9,8 +9,9 @@ export type Product = {
 }
 
 export type Cart = {
+  total: number
   discountedTotal: number
-  id: 1
+  id: number
   products: Product[]
   totalProducts: number
   totalQuantity: number
