@@ -1,9 +1,14 @@
-import CartsList from "./components/Features/CartsList"
+import CartsList from './components/Features/CartsList'
+import s from './App.module.scss'
 
 const App = (): JSX.Element => {
-  return <div className='App'>
-    <CartsList />
-  </div>
+  return (
+    <div className={s.app}>
+      <main className={s.app__main}>
+        <CartsList />
+      </main>
+    </div>
+  )
 }
 
 export default App
