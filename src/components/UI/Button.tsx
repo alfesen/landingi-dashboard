@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 import s from './Button.module.scss'
 
 type ButtonProps = {
-  onClick: (...args: any[]) => void
+  onClick: () => void
   children: ReactNode
   className?: string
   danger?: boolean
