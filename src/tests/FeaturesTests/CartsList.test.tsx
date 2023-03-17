@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import CartsList from '../../components/Features/CartsList'
+import CartsList from '../../components/Features/CartsList/CartsList'
 
 describe('CartsList component', () => {
   it('should render 20 list items for each cart', async () => {

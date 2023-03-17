@@ -1,5 +1,5 @@
-import { CartsListItem as PropsType } from '../../types'
-import Button from '../UI/Button'
+import { CartsListItem as PropsType } from '../../../types'
+import Button from '../../UI/Button'
 import s from './CartsListItem.module.scss'
 
 const CartsListItem = ({ id, totalProducts, totalAmount }: PropsType) => {

@@ -1,4 +1,4 @@
-import CartsList from './components/Features/CartsList'
+import CartsList from './components/Features/CartsList/CartsList'
 import s from './App.module.scss'
 
 const App = (): JSX.Element => {
