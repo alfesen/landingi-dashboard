@@ -32,7 +32,7 @@ const CartsList = () => {
     <div>
       {loading && <p>loading</p>}
       {error && <p style={{ color: 'red' }}>{error}</p>}
-      {!loading && !error && renderCartsListItems}
+      <ul>{!loading && !error && renderCartsListItems}</ul>
     </div>
   )
 }
