@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import useFetchData from '../../hooks/useFetchData'
-import { Cart } from '../../types'
+import useFetchData from '../../../hooks/useFetchData'
+import { Cart } from '../../../types'
 import CartsListItem from './CartsListItem'
 import s from './CartsList.module.scss'
 
