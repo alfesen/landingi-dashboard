@@ -1,0 +1,8 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  &__main {
+    height: 100vh;
+    display: flex;
+  }
+}

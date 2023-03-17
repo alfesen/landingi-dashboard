@@ -1,0 +1,8 @@
+@mixin message($fontColor, $fontSize) {
+  position: absolute;
+  color: $fontColor;
+  font-size: $fontSize;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+}

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import useFetchData from '../../hooks/useFetchData'
 import { Cart } from '../../types'
 import CartsListItem from './CartsListItem'
+import s from './CartsList.module.scss'
 
 const CartsList = () => {
   const [carts, setCarts] = useState<Cart[]>([])
@@ -29,11 +30,11 @@ const CartsList = () => {
   })
 
   return (
-    <div>
-      {loading && <p>loading</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <ul>{!loading && !error && renderCartsListItems}</ul>
-    </div>
+    <ul className={s.carts}>
+      {loading && <p className={s.carts__loading}>Loading...</p>}
+      {error && <p className={s.carts__error}>{error}</p>}
+      {!loading && !error && renderCartsListItems}
+    </ul>
   )
 }
 
