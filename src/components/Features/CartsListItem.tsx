@@ -1,4 +1,5 @@
 import { CartsListItem as PropsType } from '../../types'
+import Button from '../UI/Button'
 import s from './CartsListItem.module.scss'
 
 const CartsListItem = ({ id, totalProducts, totalAmount }: PropsType) => {
@@ -13,6 +14,10 @@ const CartsListItem = ({ id, totalProducts, totalAmount }: PropsType) => {
           Total Amount: <strong>{totalAmount}</strong>
         </p>
       </div>
+
+      <Button className={s.cart__remove} onClick={() => {}}>
+        Remove
+      </Button>
     </li>
   )
 }
