@@ -10,7 +10,7 @@ import s from './Cart.module.scss'
 
 const Cart = () => {
   const [products, setProducts] = useState<Product[]>([])
-  const { sendRequest, error, loading } = useFetchData()
+  const { sendRequest, error, loading, detachError } = useFetchData()
   const { cartId } = useContext(CartContext)
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const Cart = () => {
   return (
     <section className={s.cart}>
       {loading && <Loading dark />}
-      {error && <Error message={error} />}
+      {error && <Error onDetach={detachError} message={error} />}
       {!loading && !error && renderProducts}
     </section>
   )

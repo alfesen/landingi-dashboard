@@ -6,15 +6,17 @@ describe('CartsListItem component', () => {
     const id = 6
     const totalProducts = 12
     const totalAmount = 24
+    const mock = jest.fn()
     render(
       <CartsListItem
+        removeCart={mock}
         id={id}
         totalProducts={totalProducts}
         totalAmount={totalAmount}
       />
     )
 
-    return { id, totalProducts, totalAmount }
+    return { id, totalProducts, totalAmount, mock }
   }
 
   it('should render the list item with provided props as a data', () => {

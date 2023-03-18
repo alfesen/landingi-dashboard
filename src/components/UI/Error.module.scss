@@ -3,4 +3,16 @@
 
 .error {
   @include message($error, 1.5rem);
+display: flex;
+flex-direction: column;
+  &__detach {
+    margin: 2em 0em 0em;
+    background-color: $error;
+    color: #aaa;
+    font-size: 1rem;
+    transition: background-color 0.2s;
+    &:hover {
+      background-color: transparent;
+    }
+  }
 }

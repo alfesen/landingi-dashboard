@@ -9,7 +9,7 @@ const useFetchData = () => {
   const sendRequest = useCallback(
     async (
       url: string,
-      method: string,
+      method: string = 'GET',
       body: string | null = null,
       headers = {}
     ) => {
@@ -30,10 +30,10 @@ const useFetchData = () => {
         activeHttpRequests.current = activeHttpRequests.current.filter(
           (req: AbortController) => req !== httpAbort
         )
-      } catch (err) {
-        const errorText = 'Failed to fetch data'
+      } catch (err: any) {
+        const errorText =
+          method === 'GET' ? 'Failed to fetch data' : err.message
         setError(errorText)
-        console.log(err)
       }
 
       setLoading(false)
@@ -41,6 +41,11 @@ const useFetchData = () => {
     },
     []
   )
+
+  const detachError = () => {
+    setError(null)
+  }
+
   useEffect(() => {
     return () => {
       activeHttpRequests.current.forEach((ctrl: AbortController) =>
@@ -48,7 +53,8 @@ const useFetchData = () => {
       )
     }
   }, [])
-  return { sendRequest, loading, error }
+
+  return { sendRequest, loading, error, detachError }
 }
 
 export default useFetchData
