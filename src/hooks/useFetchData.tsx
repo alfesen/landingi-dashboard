@@ -9,7 +9,7 @@ const useFetchData = () => {
   const sendRequest = useCallback(
     async (
       url: string,
-      method: string,
+      method: string = 'GET',
       body: string | null = null,
       headers = {}
     ) => {

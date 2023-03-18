@@ -5,7 +5,7 @@ import Button from '../../UI/Button'
 import Overlay from '../../UI/Overlay'
 import s from './CartsListItem.module.scss'
 
-const CartsListItem = ({ id, totalProducts, totalAmount }: PropsType) => {
+const CartsListItem = ({ id, totalProducts, totalAmount, removeCart }: PropsType) => {
   const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false)
 
   const cartCtx = useContext(CartContext)
@@ -22,7 +22,9 @@ const CartsListItem = ({ id, totalProducts, totalAmount }: PropsType) => {
     setShowConfirmDelete(false)
   }
 
-  const confirmDelete = () => {}
+  const confirmDelete = () => {
+    removeCart(id)
+  }
 
   return (
     <Fragment>
