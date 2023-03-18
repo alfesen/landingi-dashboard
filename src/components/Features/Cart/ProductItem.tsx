@@ -14,24 +14,24 @@ const ProductItem = ({
 }: Product) => {
   return (
     <Card className={s.product}>
-      <h2>
+      <h2 className={s.product__header}>
         {id}. {title}
       </h2>
-      <div>
-        <p>
+      <div className={s.product__body}>
+        <p className={s.product__info}>
           Price: <span>${price}</span>
         </p>
-        <p>
+        <p className={s.product__info}>
           Quantity: <span>{quantity}</span>
         </p>
-        <p>
+        <p className={s.product__info}>
           Discount Percentage: <span>{discountPercentage}%</span>
         </p>
-        <p>
+        <p className={s.product__info}>
           Discounted Price: <span>${discountedPrice}</span>
         </p>
       </div>
-      <h3>
+      <h3 className={s.product__total}>
         Total: <span>${total}</span>
       </h3>
     </Card>

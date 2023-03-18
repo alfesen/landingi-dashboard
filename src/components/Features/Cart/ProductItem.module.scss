@@ -2,4 +2,24 @@
   width: 30rem;
   padding: 2em;
   margin: 1em;
+
+  &__header,
+  &__body {
+    margin-bottom: 1em;
+  }
+
+  &__info,
+  &__total {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__info {
+    margin-bottom: 0.5em;
+  }
+
+  &__total {
+    margin-top: 1em;
+    display: flex;
+  }
 }
