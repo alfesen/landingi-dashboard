@@ -12,7 +12,7 @@ const CartsListItem = ({ id, totalProducts, totalAmount }: PropsType) => {
   }
 
   return (
-    <li onClick={getCart} key={id} className={s.cart}>
+    <li onClick={getCart} key={id} className={`${s.cart} ${cartCtx.cartId === id ? s.active : ''}`}>
       <h4>{id}</h4>
       <div>
         <p>

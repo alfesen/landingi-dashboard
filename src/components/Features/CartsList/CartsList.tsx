@@ -8,6 +8,8 @@ const CartsList = () => {
   const [carts, setCarts] = useState<Cart[]>([])
   const { sendRequest, loading, error } = useFetchData()
 
+  // TODO: Styling before merging LDT-7
+
   useEffect(() => {
     const fetchData = async () => {
       try {

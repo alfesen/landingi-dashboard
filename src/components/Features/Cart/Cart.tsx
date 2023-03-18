@@ -4,6 +4,8 @@ import { CartContext } from '../../../context/CartContext'
 import ProductItem from './ProductItem'
 import { Product } from '../../../types'
 
+import s from './Cart.module.scss'
+
 const Cart = () => {
   const [products, setProducts] = useState<Product[]>([])
   const { sendRequest } = useFetchData()
@@ -30,7 +32,7 @@ const Cart = () => {
     />
   ))
 
-  return <div>{renderProducts}</div>
+  return <section className={s.cart}>{renderProducts}</section>
 }
 
 export default Cart

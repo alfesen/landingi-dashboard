@@ -1,4 +1,7 @@
 import { Product } from '../../../types'
+import Card from '../../UI/Card'
+
+import s from './ProductItem.module.scss'
 
 const ProductItem = ({
   id,
@@ -10,7 +13,7 @@ const ProductItem = ({
   quantity,
 }: Product) => {
   return (
-    <div>
+    <Card className={s.product}>
       <h2>
         {id}. {title}
       </h2>
@@ -31,7 +34,7 @@ const ProductItem = ({
       <h3>
         Total: <span>${total}</span>
       </h3>
-    </div>
+    </Card>
   )
 }
 
