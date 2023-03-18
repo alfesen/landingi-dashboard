@@ -3,12 +3,14 @@ import useFetchData from '../../../hooks/useFetchData'
 import { CartContext } from '../../../context/CartContext'
 import ProductItem from './ProductItem'
 import { Product } from '../../../types'
+import Error from '../../UI/Error'
+import Loading from '../../UI/Loading'
 
 import s from './Cart.module.scss'
 
 const Cart = () => {
   const [products, setProducts] = useState<Product[]>([])
-  const { sendRequest } = useFetchData()
+  const { sendRequest, error, loading } = useFetchData()
   const { cartId } = useContext(CartContext)
 
   useEffect(() => {
@@ -32,7 +34,13 @@ const Cart = () => {
     />
   ))
 
-  return <section className={s.cart}>{renderProducts}</section>
+  return (
+    <section className={s.cart}>
+      {loading && <Loading dark />}
+      {error && <Error message={error} />}
+      {!loading && !error && renderProducts}
+    </section>
+  )
 }
 
 export default Cart

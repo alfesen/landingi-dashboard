@@ -5,7 +5,7 @@ export type Product = {
   price: number
   quantity: number
   title: string
-  total: 60
+  total: number
 }
 
 export type Cart = {

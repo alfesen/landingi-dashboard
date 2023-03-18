@@ -8,11 +8,4 @@
   max-height: 100%;
   overflow: scroll;
   position: relative;
-  &__loading {
-    @include message(#fff, 2rem);
-  }
-
-  &__error {
-    @include message($error, 1.5rem);
-  }
 }
