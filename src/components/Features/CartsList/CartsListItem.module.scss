@@ -21,4 +21,40 @@
       background-color: $primary-background;
     }
   }
+
+  &__modal {
+    &-header {
+      display: flex;
+      justify-content: space-between;
+      padding: 1em;
+      background-color: $primary-background;
+      color: #fff;
+      text-transform: uppercase;
+    }
+    &-prompt {
+      padding: 3em 1em;
+    }
+    &-actions {
+      padding: 1em;
+      display: flex;
+      justify-content: flex-end;
+    }
+    &-btn {
+      font-size: 1rem;
+      margin: 0.5em;
+      padding: 0.5em 1em;
+    }
+    &-cancel {
+      transition: background-color 0.2s;
+      &:hover {
+        background-color: $error;
+      }
+    }
+    &-confirm {
+      transition: background-color 0.2s;
+      &:hover {
+        background-color: $error-hover;
+      }
+    }
+  }
 }
