@@ -23,3 +23,8 @@ export type CartsListItem = {
   totalAmount: number
   totalProducts: number
 }
+
+export type Card = {
+  className: string
+  children: React.ReactNode
+}

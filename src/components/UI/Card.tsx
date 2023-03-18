@@ -1,14 +1,8 @@
 import s from './Card.module.scss'
+import { Card as PropTypes } from '../../types'
 
-type Props = {
-  className: string
-  children: React.ReactNode
-}
-
-const Card = (props: Props) => {
-  const { className, children } = props
-  const { card } = s
-  return <div className={`${className} ${card}`}>{children}</div>
+const Card = ({ className, children }: PropTypes) => {
+  return <div aria-label='card' className={`${className} ${s.card}`}>{children}</div>
 }
 
 export default Card
