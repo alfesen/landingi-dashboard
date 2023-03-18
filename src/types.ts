@@ -5,7 +5,7 @@ export type Product = {
   price: number
   quantity: number
   title: string
-  total: 60
+  total: number
 }
 
 export type Cart = {
@@ -22,4 +22,9 @@ export type CartsListItem = {
   id: number
   totalAmount: number
   totalProducts: number
+}
+
+export type Card = {
+  className: string
+  children: React.ReactNode
 }

@@ -3,10 +3,14 @@ import useFetchData from '../../../hooks/useFetchData'
 import { Cart } from '../../../types'
 import CartsListItem from './CartsListItem'
 import s from './CartsList.module.scss'
+import Error from '../../UI/Error'
+import Loading from '../../UI/Loading'
 
 const CartsList = () => {
   const [carts, setCarts] = useState<Cart[]>([])
   const { sendRequest, loading, error } = useFetchData()
+
+  // TODO: Styling before merging LDT-7
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,8 +35,8 @@ const CartsList = () => {
 
   return (
     <ul className={s.carts}>
-      {loading && <p className={s.carts__loading}>Loading...</p>}
-      {error && <p className={s.carts__error}>{error}</p>}
+      {loading && <Loading />}
+      {error && <Error message={error} />}
       {!loading && !error && renderCartsListItems}
     </ul>
   )

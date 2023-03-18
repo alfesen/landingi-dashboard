@@ -19,7 +19,7 @@ const useFetchData = () => {
     setLoading(false)
     return responseData
   }, [])
-  console.log(error)
+  
   return { sendRequest, loading, error }
 }
 
