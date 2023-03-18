@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useContext, useState } from 'react'
+import { useCallback, useEffect, useContext, useState, Fragment } from 'react'
 import useFetchData from '../../../hooks/useFetchData'
 import { Cart } from '../../../types'
 import CartsListItem from './CartsListItem'
@@ -9,8 +9,9 @@ import { CartContext } from '../../../context/CartContext'
 
 const CartsList = () => {
   const [carts, setCarts] = useState<Cart[]>([])
-  const { sendRequest, loading, error } = useFetchData()
-  const { getCartId } = useContext(CartContext)
+  const [currentCart, setCurrentCart] = useState<number | null>(null)
+  const { sendRequest, loading, error, detachError } = useFetchData()
+  const { getCartId, cartId } = useContext(CartContext)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,17 +28,20 @@ const CartsList = () => {
       const firstCart = carts?.reduce((prev, curr) =>
         prev.id < curr.id ? prev : curr
       )
-      getCartId(firstCart.id)
+      if (currentCart === cartId) {
+        getCartId(firstCart.id)
+      }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [carts])
 
   const removeCart = useCallback(
     async (id: number) => {
+      setCurrentCart(id)
       try {
         await sendRequest(`https://dummyjson.com/carts/${id}`, 'DELETE')
         setCarts(prevCarts => prevCarts.filter(c => c.id !== id))
-      } catch (err) {}
+      } catch (err: any) {}
     },
     [sendRequest]
   )
@@ -57,7 +61,11 @@ const CartsList = () => {
   return (
     <ul className={s.carts}>
       {loading && <Loading />}
-      {error && <Error message={error} />}
+      {error && (
+        <Fragment>
+          <Error message={error} onDetach={detachError} />
+        </Fragment>
+      )}
       {!loading && !error && renderCartsListItems}
     </ul>
   )

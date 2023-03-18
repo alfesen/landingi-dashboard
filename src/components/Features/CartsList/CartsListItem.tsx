@@ -1,17 +1,25 @@
-import { Fragment, useContext, useState } from 'react'
+import { Fragment, MouseEvent, useContext, useState } from 'react'
 import { CartContext } from '../../../context/CartContext'
 import { CartsListItem as PropsType } from '../../../types'
 import Button from '../../UI/Button'
 import Overlay from '../../UI/Overlay'
 import s from './CartsListItem.module.scss'
 
-const CartsListItem = ({ id, totalProducts, totalAmount, removeCart }: PropsType) => {
+const CartsListItem = ({
+  id,
+  totalProducts,
+  totalAmount,
+  removeCart,
+}: PropsType) => {
   const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false)
 
   const cartCtx = useContext(CartContext)
 
-  const getCart = () => {
-    cartCtx.getCartId(id)
+  const getCart = (e: MouseEvent) => {
+    const target = e.target as HTMLElement
+    if (target.tagName.toLowerCase() !== 'button') {
+      cartCtx.getCartId(id)
+    }
   }
 
   const openModal = () => {
