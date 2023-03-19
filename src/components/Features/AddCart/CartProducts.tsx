@@ -9,7 +9,7 @@ const CartProducts = ({ products }: { products: Product[] }) => {
         key={p.id}
         id={p.id}
         title={p.title}
-        price={p.price * p.quantity!}
+        price={p.price}
         quantity={p.quantity}
         discountPercentage={p.discountPercentage}
         discountedPrice={
