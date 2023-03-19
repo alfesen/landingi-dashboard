@@ -14,7 +14,6 @@ import { CartContext } from '../../../context/CartContext'
 
 const AddCart = ({
   onCancel,
-  onAddCart,
 }: {
   onCancel: () => void
   onAddCart: (cart: any) => void
@@ -31,6 +30,22 @@ const AddCart = ({
     }
     fetchProducts()
   }, [sendRequest])
+
+  const sendCart = async () => {
+    const newCart = {
+      userId: Math.floor(Math.random() * 100),
+      products: cartProducts,
+    }
+    const cart = await sendRequest(
+      'https://dummyjson.com/carts/add',
+      'POST',
+      JSON.stringify(newCart),
+      { 'Content-Type': 'application/json' }
+    )
+    addCartToCarts(cart)
+    showCartHandler(false)
+    setCartProducts([])
+  }
 
   const renderProducts = products.map((p: Product) => {
     const addProductToCart = () => {
@@ -59,22 +74,6 @@ const AddCart = ({
       />
     )
   })
-
-  const sendCart = async () => {
-    const newCart = {
-      userId: Math.floor(Math.random() * 100),
-      products: cartProducts,
-    }
-    const cart = await sendRequest(
-      'https://dummyjson.com/carts/add',
-      'POST',
-      JSON.stringify(newCart),
-      { 'Content-Type': 'application/json' }
-    )
-    addCartToCarts(cart)
-    showCartHandler(false)
-    setCartProducts([])
-  }
 
   return (
     <Fragment>
