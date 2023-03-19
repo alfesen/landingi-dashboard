@@ -16,8 +16,11 @@ const Cart = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const cart = await sendRequest(`https://dummyjson.com/carts/${cartId}`)
-      setProducts(cart.products)
+      if (cartId <= 20) {
+        const cart = await sendRequest(`https://dummyjson.com/carts/${cartId}`)
+        setProducts(cart.products)
+      }
+      return
     }
     fetchProducts()
   }, [sendRequest, cartId])

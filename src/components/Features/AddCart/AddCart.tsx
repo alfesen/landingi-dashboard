@@ -1,4 +1,4 @@
-import { Fragment,  useContext,  useEffect, useState } from 'react'
+import { Fragment, useContext, useEffect, useState } from 'react'
 import useFetchData from '../../../hooks/useFetchData'
 import { Product } from '../../../types'
 import Button from '../../UI/Button'
@@ -12,12 +12,17 @@ import s from './AddCart.module.scss'
 import CartProducts from './CartProducts'
 import { CartContext } from '../../../context/CartContext'
 
-const AddCart = ({ onCancel }: { onCancel: () => void }) => {
+const AddCart = ({
+  onCancel,
+  onAddCart,
+}: {
+  onCancel: () => void
+  onAddCart: (cart: any) => void
+}) => {
   const [products, setProducts] = useState<Product[]>([])
   const [cartProducts, setCartProducts] = useState<Product[]>([])
   const { loading, error, detachError, sendRequest } = useFetchData()
-  const {showCart, showCartHandler} = useContext(CartContext)
-
+  const { showCart, showCartHandler } = useContext(CartContext)
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -56,6 +61,22 @@ const AddCart = ({ onCancel }: { onCancel: () => void }) => {
     )
   })
 
+  const sendCart = async () => {
+    const newCart = {
+      userId: Math.floor(Math.random() * 100),
+      products: cartProducts,
+    }
+    const response = await sendRequest(
+      'https://dummyjson.com/carts/add',
+      'POST',
+      JSON.stringify(newCart),
+      { 'Content-Type': 'application/json' }
+    )
+    onAddCart(response)
+    showCartHandler(false)
+    setCartProducts([])
+  }
+
   return (
     <Fragment>
       <section className={s.add__products}>
@@ -68,6 +89,9 @@ const AddCart = ({ onCancel }: { onCancel: () => void }) => {
             ) : (
               <p>No products in this cart</p>
             )}
+            <Button danger onClick={sendCart} className={s.cart__confirm}>
+              Send Cart
+            </Button>
           </Overlay>
         )}
         {!loading && !error && products.length > 0
@@ -75,7 +99,10 @@ const AddCart = ({ onCancel }: { onCancel: () => void }) => {
           : !loading && <Fallback message={'No products in this cart'} dark />}
       </section>
       <div className={s.actions}>
-        <Button danger className={s.actions__show} onClick={() => showCartHandler(true)}>
+        <Button
+          danger
+          className={s.actions__show}
+          onClick={() => showCartHandler(true)}>
           Show Cart
         </Button>
         {!loading && !error && (

@@ -4,7 +4,7 @@ import CartsList from '../../components/Features/CartsList/CartsList'
 describe('CartsList component', () => {
   const renderCartsList = () => {
     const mock = jest.fn()
-    render(<CartsList setAddCart={mock} />)
+    render(<CartsList setAddCart={mock} carts={[]} removeCart={mock} currentCart={null} />)
   }
 
   it('should render 20 list items for each cart', async () => {

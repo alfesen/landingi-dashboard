@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useContext, useState, Fragment } from 'react'
+import {  useEffect, useContext,  Fragment } from 'react'
 import useFetchData from '../../../hooks/useFetchData'
 import { Cart } from '../../../types'
 import CartsListItem from './CartsListItem'
@@ -10,25 +10,17 @@ import Fallback from '../../UI/Fallback'
 import Button from '../../UI/Button'
 
 const CartsList = ({
-  setAddCart, addCartMode
+  setAddCart, carts, removeCart, currentCart
 }: {
   setAddCart: () => void,
-  addCartMode?: boolean
+  carts: Cart[]
+  removeCart: (id: number) => void
+  currentCart: number | null
 }) => {
-  const [carts, setCarts] = useState<Cart[]>([])
-  const [currentCart, setCurrentCart] = useState<number | null>(null)
-  const { sendRequest, loading, error, detachError } = useFetchData()
+  
+  const {  loading, error, detachError } = useFetchData()
   const { getCartId, cartId } = useContext(CartContext)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { carts } = await sendRequest('https://dummyjson.com/carts')
-        setCarts(carts)
-      } catch (err) {}
-    }
-    fetchData()
-  }, [sendRequest])
 
   useEffect(() => {
     if (carts.length > 0) {
@@ -42,16 +34,6 @@ const CartsList = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [carts])
 
-  const removeCart = useCallback(
-    async (id: number) => {
-      setCurrentCart(id)
-      try {
-        await sendRequest(`https://dummyjson.com/carts/${id}`, 'DELETE')
-        setCarts(prevCarts => prevCarts.filter(c => c.id !== id))
-      } catch (err: any) {}
-    },
-    [sendRequest]
-  )
 
   const renderCartsListItems = carts.map(({ id, totalProducts, total }) => {
     return (
