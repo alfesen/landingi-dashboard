@@ -4,7 +4,6 @@ import ProductItem from '../shared/ProductItem'
 
 const CartProducts = ({ products }: { products: Product[] }) => {
   const renderCartProducts = products.map((p: Product) => {
-    console.log(p)
     return (
       <ProductItem
         key={p.id}

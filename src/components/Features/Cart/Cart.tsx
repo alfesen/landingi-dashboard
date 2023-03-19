@@ -12,7 +12,7 @@ import Fallback from '../../UI/Fallback'
 const Cart = () => {
   const [products, setProducts] = useState<Product[]>([])
   const { sendRequest, error, loading, detachError } = useFetchData()
-  const { cartId } = useContext(CartContext)
+  const { cartId, carts } = useContext(CartContext)
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -22,8 +22,14 @@ const Cart = () => {
       }
       return
     }
+    if (cartId > 20) {
+      const cart = carts.find(c => c.id === cartId)
+      console.log(cart)
+      setProducts(cart!.products)
+      return
+    }
     fetchProducts()
-  }, [sendRequest, cartId])
+  }, [sendRequest, cartId, carts])
 
   const renderProducts = products.map((p: Product) => (
     <ProductItem

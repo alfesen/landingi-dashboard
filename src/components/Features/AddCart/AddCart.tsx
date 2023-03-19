@@ -22,7 +22,7 @@ const AddCart = ({
   const [products, setProducts] = useState<Product[]>([])
   const [cartProducts, setCartProducts] = useState<Product[]>([])
   const { loading, error, detachError, sendRequest } = useFetchData()
-  const { showCart, showCartHandler } = useContext(CartContext)
+  const { showCart, showCartHandler, addCartToCarts } = useContext(CartContext)
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -42,7 +42,6 @@ const AddCart = ({
         setCartProducts(newCartProducts)
         return
       }
-
       setCartProducts(prevProd => [...prevProd, { ...p, quantity: 1 }])
     }
 
@@ -66,13 +65,13 @@ const AddCart = ({
       userId: Math.floor(Math.random() * 100),
       products: cartProducts,
     }
-    const response = await sendRequest(
+    const cart = await sendRequest(
       'https://dummyjson.com/carts/add',
       'POST',
       JSON.stringify(newCart),
       { 'Content-Type': 'application/json' }
     )
-    onAddCart(response)
+    addCartToCarts(cart)
     showCartHandler(false)
     setCartProducts([])
   }

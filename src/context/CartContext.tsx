@@ -33,6 +33,8 @@ const CartContextProvider = ({ children }: { children: ReactNode }) => {
   const [cartId, setCartId] = useState<number>(1)
   const [showCart, setShowCart] = useState<boolean>(false)
   const [carts, setCarts] = useState<Cart[]>([])
+  const highestId = Math.max(...carts.map(c => c.id))
+  console.log(highestId)
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -62,9 +64,12 @@ const CartContextProvider = ({ children }: { children: ReactNode }) => {
     [sendRequest, setCurrentCart]
   )
 
-  const addCartToCarts = useCallback((cart: Cart): void => {
-    setCarts(prevCarts => [...prevCarts, cart])
-  }, [])
+  const addCartToCarts = useCallback(
+    (cart: Cart): void => {
+      setCarts(prevCarts => [...prevCarts, { ...cart, id: highestId + 1 }])
+    },
+    [highestId]
+  )
 
   const value = {
     cartId,
