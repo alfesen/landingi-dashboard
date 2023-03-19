@@ -36,9 +36,11 @@ const ProductItem = ({
           Discounted Price: <span>${discountedPrice}</span>
         </p>
       </div>
-     {total && <h3 className={s.product__total}>
-        Total: <span>${total}</span>
-      </h3>}
+      {total && (
+        <h3 className={s.product__total}>
+          Total: <span>${total}</span>
+        </h3>
+      )}
       {add && (
         <div className={s.product__actions}>
           {onAdd && (

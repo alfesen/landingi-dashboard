@@ -61,6 +61,9 @@ const AddCart = ({
   })
 
   const sendCart = async () => {
+    if (cartProducts.length === 0) {
+      return alert('No products to send!')
+    }
     const newCart = {
       userId: Math.floor(Math.random() * 100),
       products: cartProducts,
@@ -84,13 +87,15 @@ const AddCart = ({
         {showCart && (
           <Overlay onClose={() => showCartHandler(false)}>
             {cartProducts.length > 0 ? (
-              <CartProducts products={cartProducts} />
+              <Fragment>
+                <Button danger onClick={sendCart} className={s.cart__confirm}>
+                  Send Cart
+                </Button>
+                <CartProducts products={cartProducts} />
+              </Fragment>
             ) : (
-              <p>No products in this cart</p>
+              <p className={s.add__error}>No products in this cart</p>
             )}
-            <Button danger onClick={sendCart} className={s.cart__confirm}>
-              Send Cart
-            </Button>
           </Overlay>
         )}
         {!loading && !error && products.length > 0
