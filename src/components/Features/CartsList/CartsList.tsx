@@ -6,6 +6,7 @@ import s from './CartsList.module.scss'
 import Error from '../../UI/Error'
 import Loading from '../../UI/Loading'
 import { CartContext } from '../../../context/CartContext'
+import Fallback from '../../UI/Fallback'
 
 const CartsList = () => {
   const [carts, setCarts] = useState<Cart[]>([])
@@ -66,7 +67,11 @@ const CartsList = () => {
           <Error message={error} onDetach={detachError} />
         </Fragment>
       )}
-      {!loading && !error && renderCartsListItems}
+      {!loading && !error && carts.length > 0 ? (
+        renderCartsListItems
+      ) : (
+        <Fallback message='No carts here' />
+      )}
     </ul>
   )
 }
