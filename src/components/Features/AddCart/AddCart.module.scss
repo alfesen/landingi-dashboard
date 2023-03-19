@@ -1,0 +1,18 @@
+@import '../../../scss/variables.scss';
+@import '../../../scss/mixins';
+
+.add {
+  @include product-list;
+}
+.actions {
+  text-align: right;
+  margin: 1em;
+  &__cancel {
+    padding: 1em 2em;
+    color: #fff;
+    transition: background-color 0.2s;
+    &:hover {
+      background-color: $primary-background;
+    }
+  }
+}

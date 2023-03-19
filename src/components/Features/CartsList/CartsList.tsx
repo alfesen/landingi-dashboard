@@ -7,8 +7,13 @@ import Error from '../../UI/Error'
 import Loading from '../../UI/Loading'
 import { CartContext } from '../../../context/CartContext'
 import Fallback from '../../UI/Fallback'
+import Button from '../../UI/Button'
 
-const CartsList = () => {
+const CartsList = ({
+  setAddCart,
+}: {
+  setAddCart: () => void
+}) => {
   const [carts, setCarts] = useState<Cart[]>([])
   const [currentCart, setCurrentCart] = useState<number | null>(null)
   const { sendRequest, loading, error, detachError } = useFetchData()
@@ -61,6 +66,9 @@ const CartsList = () => {
 
   return (
     <ul className={s.carts}>
+      <li>
+        <Button className={s.carts__button} onClick={setAddCart}>Add Cart</Button>
+      </li>
       {loading && <Loading />}
       {error && (
         <Fragment>

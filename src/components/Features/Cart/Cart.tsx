@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import useFetchData from '../../../hooks/useFetchData'
 import { CartContext } from '../../../context/CartContext'
-import ProductItem from './ProductItem'
+import ProductItem from '../shared/ProductItem'
 import { Product } from '../../../types'
 import Error from '../../UI/Error'
 import Loading from '../../UI/Loading'

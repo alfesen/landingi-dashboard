@@ -1,8 +1,9 @@
 .app {
   display: flex;
   flex-direction: column;
+  height: 100vh;
   &__main {
-    height: 97vh;
     display: flex;
+    height: calc(100vh - 3rem);
   }
 }

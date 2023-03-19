@@ -6,6 +6,8 @@ export type Product = {
   quantity: number
   title: string
   total: number
+  add?: boolean
+  onAdd?: () => void
 }
 
 export type Cart = {
