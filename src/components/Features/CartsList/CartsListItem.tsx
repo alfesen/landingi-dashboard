@@ -5,14 +5,10 @@ import Button from '../../UI/Button'
 import Overlay from '../../UI/Overlay'
 import s from './CartsListItem.module.scss'
 
-const CartsListItem = ({
-  id,
-  totalProducts,
-  totalAmount,
-}: PropsType) => {
+const CartsListItem = ({ id, totalProducts, totalAmount }: PropsType) => {
   const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false)
-
-  const { showCartHandler, getCartId, cartId, removeCart } = useContext(CartContext)
+  const { showCartHandler, getCartId, cartId, removeCart } =
+    useContext(CartContext)
 
   const getCart = (e: MouseEvent) => {
     const target = e.target as HTMLElement

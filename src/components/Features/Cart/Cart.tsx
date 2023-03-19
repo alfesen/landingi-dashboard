@@ -24,7 +24,6 @@ const Cart = () => {
     }
     if (cartId > 20) {
       const cart = carts.find(c => c.id === cartId)
-      console.log(cart)
       setProducts(cart!.products)
       return
     }
