@@ -24,7 +24,6 @@ export type CartsListItem = {
   id: number
   totalAmount: number
   totalProducts: number
-  removeCart: (id: number) => void
 }
 
 export type Card = {

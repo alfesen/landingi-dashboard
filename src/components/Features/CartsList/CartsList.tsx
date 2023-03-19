@@ -1,6 +1,5 @@
-import {  useEffect, useContext,  Fragment } from 'react'
+import { useEffect, useContext, Fragment } from 'react'
 import useFetchData from '../../../hooks/useFetchData'
-import { Cart } from '../../../types'
 import CartsListItem from './CartsListItem'
 import s from './CartsList.module.scss'
 import Error from '../../UI/Error'
@@ -9,38 +8,27 @@ import { CartContext } from '../../../context/CartContext'
 import Fallback from '../../UI/Fallback'
 import Button from '../../UI/Button'
 
-const CartsList = ({
-  setAddCart, carts, removeCart, currentCart
-}: {
-  setAddCart: () => void,
-  carts: Cart[]
-  removeCart: (id: number) => void
-  currentCart: number | null
-}) => {
-  
-  const {  loading, error, detachError } = useFetchData()
-  const { getCartId, cartId } = useContext(CartContext)
-
+const CartsList = ({ setAddCart }: { setAddCart: () => void }) => {
+  const { loading, error, detachError } = useFetchData()
+  const { getCartId, cartId, carts } = useContext(CartContext)
 
   useEffect(() => {
     if (carts.length > 0) {
       const firstCart = carts?.reduce((prev, curr) =>
         prev.id < curr.id ? prev : curr
       )
-      if (currentCart === cartId) {
+      if (cartId) {
         getCartId(firstCart.id)
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [carts])
 
-
   const renderCartsListItems = carts.map(({ id, totalProducts, total }) => {
     return (
       <CartsListItem
         key={`${id}_cart_list_item_key`}
         id={id}
-        removeCart={removeCart}
         totalAmount={total}
         totalProducts={totalProducts}
       />
@@ -50,7 +38,9 @@ const CartsList = ({
   return (
     <ul className={s.carts}>
       <li>
-        <Button className={s.carts__button} onClick={setAddCart}>Add Cart</Button> 
+        <Button className={s.carts__button} onClick={setAddCart}>
+          Add Cart
+        </Button>
       </li>
       {loading && <Loading />}
       {error && (

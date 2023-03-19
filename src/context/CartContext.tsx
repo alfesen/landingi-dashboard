@@ -1,32 +1,80 @@
-import { createContext, ReactNode, useState } from 'react'
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react'
+import useFetchData from '../hooks/useFetchData'
+import { Cart } from '../types'
 
 interface CartContextInterface {
   cartId: number
   getCartId: (cartId: number) => void
   showCart: boolean
   showCartHandler: (bool: boolean) => void
+  carts: Cart[]
+  addCartToCarts: (cart: Cart) => void
+  removeCart: (id: number) => void
 }
 
 export const CartContext = createContext<CartContextInterface>({
   cartId: 1,
   getCartId: (cartId: number) => {},
   showCart: false,
-  showCartHandler: (bool: boolean) => {}
+  showCartHandler: (bool: boolean) => {},
+  carts: [],
+  addCartToCarts: (cart: Cart) => {},
+  removeCart: (id: number) => {},
 })
 
 const CartContextProvider = ({ children }: { children: ReactNode }) => {
+  const { sendRequest } = useFetchData()
   const [cartId, setCartId] = useState<number>(1)
   const [showCart, setShowCart] = useState<boolean>(false)
+  const [carts, setCarts] = useState<Cart[]>([])
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { carts } = await sendRequest('https://dummyjson.com/carts')
+        setCarts(carts)
+      } catch (err) {}
+    }
+    fetchData()
+  }, [sendRequest])
 
-  const setCurrentCart = (cartId: number) => {
+  const setCurrentCart = useCallback((cartId: number) => {
     setCartId(cartId)
-  }
+  }, [])
 
-  const showCartHandler = (bool: boolean) => {
+  const showCartHandler = useCallback((bool: boolean) => {
     setShowCart(bool)
-  }
+  }, [])
 
-  const value = { cartId, getCartId: setCurrentCart, showCart, showCartHandler }
+  const removeCart = useCallback(
+    async (id: number) => {
+      setCurrentCart(id)
+      try {
+        await sendRequest(`https://dummyjson.com/carts/${id}`, 'DELETE')
+        setCarts(prevCarts => prevCarts.filter(c => c.id !== id))
+      } catch (err: any) {}
+    },
+    [sendRequest, setCurrentCart]
+  )
+
+  const addCartToCarts = useCallback((cart: Cart): void => {
+    setCarts(prevCarts => [...prevCarts, cart])
+  }, [])
+
+  const value = {
+    cartId,
+    getCartId: setCurrentCart,
+    showCart,
+    showCartHandler,
+    carts,
+    addCartToCarts,
+    removeCart,
+  }
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>
 }

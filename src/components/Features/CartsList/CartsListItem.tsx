@@ -9,11 +9,10 @@ const CartsListItem = ({
   id,
   totalProducts,
   totalAmount,
-  removeCart,
 }: PropsType) => {
   const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false)
 
-  const { showCartHandler, getCartId, cartId } = useContext(CartContext)
+  const { showCartHandler, getCartId, cartId, removeCart } = useContext(CartContext)
 
   const getCart = (e: MouseEvent) => {
     const target = e.target as HTMLElement
