@@ -7,6 +7,7 @@ import Error from '../../UI/Error'
 import Loading from '../../UI/Loading'
 
 import s from './Cart.module.scss'
+import Fallback from '../../UI/Fallback'
 
 const Cart = () => {
   const [products, setProducts] = useState<Product[]>([])
@@ -38,7 +39,9 @@ const Cart = () => {
     <section className={s.cart}>
       {loading && <Loading dark />}
       {error && <Error onDetach={detachError} message={error} />}
-      {!loading && !error && renderProducts}
+      {!loading && !error && products.length > 0
+        ? renderProducts
+        : !loading && <Fallback message={'No products in this cart'} dark />}
     </section>
   )
 }
