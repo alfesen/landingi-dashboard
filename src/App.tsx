@@ -21,7 +21,7 @@ const App = (): JSX.Element => {
       <Header />
       <main className={s.app__main}>
         <CartContextProvider>
-          <CartsList setAddCart={showAddCart} />
+          <CartsList setAddCart={showAddCart} addCartMode={addCart} />
           {addCart ? <AddCart onCancel={hideAddCart} /> : <Cart />}
         </CartContextProvider>
       </main>

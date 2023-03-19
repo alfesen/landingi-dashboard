@@ -3,9 +3,9 @@ export type Product = {
   discountedPrice: number
   id: number
   price: number
-  quantity: number
+  quantity?: number
   title: string
-  total: number
+  total?: number
   add?: boolean
   onAdd?: () => void
 }

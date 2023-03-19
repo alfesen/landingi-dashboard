@@ -1,5 +1,9 @@
+@import '../../../scss/variables';
+
 .product {
-  width: 30rem;
+  width: 90%;
+  margin: 0 auto;
+  max-width: 30rem;
   padding: 2em;
   margin: 1em;
 
@@ -21,5 +25,20 @@
   &__total {
     margin-top: 1em;
     display: flex;
+  }
+
+  &__actions {
+    text-align: right;
+    margin: 1em 0;
+  }
+  &__add {
+    color: #fff;
+    padding: 0.5em 1em;
+    font-size: 1rem;
+    background-color: $primary-background;
+    transition: background-color 0.2s;
+    &:hover {
+      background-color: $secondary-background;
+    }
   }
 }

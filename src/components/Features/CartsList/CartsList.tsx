@@ -10,9 +10,10 @@ import Fallback from '../../UI/Fallback'
 import Button from '../../UI/Button'
 
 const CartsList = ({
-  setAddCart,
+  setAddCart, addCartMode
 }: {
-  setAddCart: () => void
+  setAddCart: () => void,
+  addCartMode?: boolean
 }) => {
   const [carts, setCarts] = useState<Cart[]>([])
   const [currentCart, setCurrentCart] = useState<number | null>(null)
@@ -67,7 +68,7 @@ const CartsList = ({
   return (
     <ul className={s.carts}>
       <li>
-        <Button className={s.carts__button} onClick={setAddCart}>Add Cart</Button>
+        <Button className={s.carts__button} onClick={setAddCart}>Add Cart</Button> 
       </li>
       {loading && <Loading />}
       {error && (

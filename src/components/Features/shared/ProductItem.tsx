@@ -24,9 +24,11 @@ const ProductItem = ({
         <p className={s.product__info}>
           Price: <span>${price}</span>
         </p>
-        <p className={s.product__info}>
-          Quantity: <span>{quantity}</span>
-        </p>
+        {quantity && (
+          <p className={s.product__info}>
+            Quantity: <span>{quantity}</span>
+          </p>
+        )}
         <p className={s.product__info}>
           Discount Percentage: <span>{discountPercentage}%</span>
         </p>
@@ -34,12 +36,18 @@ const ProductItem = ({
           Discounted Price: <span>${discountedPrice}</span>
         </p>
       </div>
-      <h3 className={s.product__total}>
+     {total && <h3 className={s.product__total}>
         Total: <span>${total}</span>
-      </h3>
-      <div className={s.product__actions}>
-        {add && onAdd && <Button onClick={onAdd}>Add to Cart</Button>}
-      </div>
+      </h3>}
+      {add && (
+        <div className={s.product__actions}>
+          {onAdd && (
+            <Button className={s.product__add} onClick={onAdd}>
+              Add to Cart
+            </Button>
+          )}
+        </div>
+      )}
     </Card>
   )
 }
