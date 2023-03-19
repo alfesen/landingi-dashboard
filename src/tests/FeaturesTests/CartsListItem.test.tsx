@@ -9,7 +9,6 @@ describe('CartsListItem component', () => {
     const mock = jest.fn()
     render(
       <CartsListItem
-        removeCart={mock}
         id={id}
         totalProducts={totalProducts}
         totalAmount={totalAmount}

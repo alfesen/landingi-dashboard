@@ -9,16 +9,16 @@ const CartsListItem = ({
   id,
   totalProducts,
   totalAmount,
-  removeCart,
 }: PropsType) => {
   const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false)
 
-  const cartCtx = useContext(CartContext)
+  const { showCartHandler, getCartId, cartId, removeCart } = useContext(CartContext)
 
   const getCart = (e: MouseEvent) => {
     const target = e.target as HTMLElement
     if (target.tagName.toLowerCase() !== 'button') {
-      cartCtx.getCartId(id)
+      showCartHandler(false)
+      getCartId(id)
     }
   }
 
@@ -63,7 +63,7 @@ const CartsListItem = ({
       <li
         onClick={getCart}
         key={id}
-        className={`${s.cart} ${cartCtx.cartId === id ? s.active : ''}`}>
+        className={`${s.cart} ${cartId === id ? s.active : ''}`}>
         <h4>{id}</h4>
         <div>
           <p>

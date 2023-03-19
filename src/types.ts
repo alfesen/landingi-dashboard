@@ -3,9 +3,11 @@ export type Product = {
   discountedPrice: number
   id: number
   price: number
-  quantity: number
+  quantity?: number
   title: string
-  total: number
+  total?: number
+  add?: boolean
+  onAdd?: () => void
 }
 
 export type Cart = {
@@ -22,7 +24,6 @@ export type CartsListItem = {
   id: number
   totalAmount: number
   totalProducts: number
-  removeCart: (id: number) => void
 }
 
 export type Card = {

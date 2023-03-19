@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import useFetchData from '../../../hooks/useFetchData'
 import { CartContext } from '../../../context/CartContext'
-import ProductItem from './ProductItem'
+import ProductItem from '../shared/ProductItem'
 import { Product } from '../../../types'
 import Error from '../../UI/Error'
 import Loading from '../../UI/Loading'
@@ -12,15 +12,24 @@ import Fallback from '../../UI/Fallback'
 const Cart = () => {
   const [products, setProducts] = useState<Product[]>([])
   const { sendRequest, error, loading, detachError } = useFetchData()
-  const { cartId } = useContext(CartContext)
+  const { cartId, carts } = useContext(CartContext)
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const cart = await sendRequest(`https://dummyjson.com/carts/${cartId}`)
-      setProducts(cart.products)
+      if (cartId <= 20) {
+        const cart = await sendRequest(`https://dummyjson.com/carts/${cartId}`)
+        setProducts(cart.products)
+      }
+      return
+    }
+    if (cartId > 20) {
+      const cart = carts.find(c => c.id === cartId)
+      console.log(cart)
+      setProducts(cart!.products)
+      return
     }
     fetchProducts()
-  }, [sendRequest, cartId])
+  }, [sendRequest, cartId, carts])
 
   const renderProducts = products.map((p: Product) => (
     <ProductItem
