@@ -1,12 +1,11 @@
-import { useContext, useState, lazy, Suspense } from 'react'
+import { useState, lazy, Suspense } from 'react'
 import s from './App.module.scss'
-import CartContextProvider, { CartContext } from './context/CartContext'
+import CartContextProvider from './context/CartContext'
 import Header from './components/Layout/Header'
 import Loading from './components/UI/Loading'
 
 const App = (): JSX.Element => {
   const [addCart, setAddCart] = useState<boolean>(false)
-  const { addCartToCarts } = useContext(CartContext)
   const AddCart = lazy(() => import('./components/Features/AddCart/AddCart'))
   const CartsList = lazy(
     () => import('./components/Features/CartsList/CartsList')
@@ -27,11 +26,7 @@ const App = (): JSX.Element => {
         <CartContextProvider>
           <Suspense fallback={<Loading />}>
             <CartsList setAddCart={showAddCart} />
-            {addCart ? (
-              <AddCart onCancel={hideAddCart} onAddCart={addCartToCarts} />
-            ) : (
-              <Cart />
-            )}
+            {addCart ? <AddCart onCancel={hideAddCart} /> : <Cart />}
           </Suspense>
         </CartContextProvider>
       </main>

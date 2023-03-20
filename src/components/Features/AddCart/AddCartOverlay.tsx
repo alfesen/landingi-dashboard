@@ -1,18 +1,12 @@
 import { Fragment, useContext, useState } from 'react'
 import { CartContext } from '../../../context/CartContext'
-import { Product } from '../../../types'
+import { AddCartOverlay as PropTypes } from '../../../types'
 import Button from '../../UI/Button'
 import Overlay from '../../UI/Overlay'
 import AddedProducts from './AddedProducts'
 import s from './AddCartOverlay.module.scss'
 
-const AddCartOverlay = ({
-  cartProducts,
-  sendCart,
-}: {
-  cartProducts: Product[]
-  sendCart: () => void
-}) => {
+const AddCartOverlay = ({ cartProducts, sendCart }: PropTypes) => {
   const { showCartHandler } = useContext(CartContext)
   const [clicked, setClicked] = useState<boolean>(false)
 
