@@ -1,3 +1,5 @@
+import { ReactNode } from 'react'
+
 export type Product = {
   discountPercentage: number
   discountedPrice: number
@@ -29,4 +31,38 @@ export type CartsListItem = {
 export type Card = {
   className: string
   children: React.ReactNode
+}
+
+export type AddCartOverlay = {
+  cartProducts: Product[]
+  sendCart: () => void
+}
+
+export type RemoveModal = {
+  onClose: () => void
+  id: number
+  totalAmount: number
+  onConfirm: () => void
+}
+export type Button = {
+  onClick: () => void
+  children: ReactNode
+  className?: string
+  danger?: boolean
+  disabled?: boolean
+}
+
+export type Error = {
+  message: string
+  onDetach: () => void
+}
+
+export type Fallback = {
+  dark?: boolean
+  message: string
+}
+
+export type Message = {
+  error?: boolean
+  message: string
 }

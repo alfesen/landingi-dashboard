@@ -35,7 +35,7 @@ export const CartContext = createContext<CartContextInterface>({
   message: null,
   loading: false,
   error: null,
-  detachError: () => {}
+  detachError: () => {},
 })
 
 const CartContextProvider = ({ children }: { children: ReactNode }) => {
@@ -76,7 +76,7 @@ const CartContextProvider = ({ children }: { children: ReactNode }) => {
     async (id: number) => {
       if (id <= 20) {
         const response = await sendRequest(
-          `https://dummyjson.com/cats/${id}`,
+          `https://dummyjson.com/carts/${id}`,
           'DELETE'
         )
         if (response.isDeleted) {
@@ -113,7 +113,7 @@ const CartContextProvider = ({ children }: { children: ReactNode }) => {
     message,
     loading,
     error,
-    detachError
+    detachError,
   }
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>

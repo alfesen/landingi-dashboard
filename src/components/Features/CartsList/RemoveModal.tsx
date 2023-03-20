@@ -1,18 +1,9 @@
+import { RemoveModal as PropTypes } from '../../../types'
 import Button from '../../UI/Button'
 import Overlay from '../../UI/Overlay'
 import s from './RemoveModal.module.scss'
 
-const RemoveModal = ({
-  onClose,
-  id,
-  totalAmount,
-  onConfirm,
-}: {
-  onClose: () => void
-  id: number
-  totalAmount: number
-  onConfirm: () => void
-}) => {
+const RemoveModal = ({ onClose, id, totalAmount, onConfirm }: PropTypes) => {
   return (
     <Overlay onClose={onClose}>
       <header className={s.modal__header}>

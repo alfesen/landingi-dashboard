@@ -13,11 +13,7 @@ import { useEffect, useState } from 'react'
 import { Product } from '../../../types'
 import s from './Chart.module.scss'
 
-type Chart = {
-  products: Product[]
-}
-
-const LineChart = ({ products }: Chart) => {
+const LineChart = ({ products }: { products: Product[] }) => {
   ChartJS.register(
     CategoryScale,
     LinearScale,

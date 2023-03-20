@@ -16,7 +16,6 @@ const AddCart = ({
   onCancel,
 }: {
   onCancel: () => void
-  onAddCart: (cart: any) => void
 }) => {
   const [products, setProducts] = useState<Product[]>([])
   const [cartProducts, setCartProducts] = useState<Product[]>([])
