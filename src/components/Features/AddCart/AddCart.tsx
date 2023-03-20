@@ -9,7 +9,7 @@ import Overlay from '../../UI/Overlay'
 import ProductItem from '../shared/ProductItem'
 import { countDiscount } from '../../../helpers'
 import s from './AddCart.module.scss'
-import CartProducts from './CartProducts'
+import AddedProducts from './AddedProducts'
 import { CartContext } from '../../../context/CartContext'
 
 const AddCart = ({
@@ -89,7 +89,7 @@ const AddCart = ({
                 <Button danger onClick={sendCart} className={s.cart__confirm}>
                   Send Cart
                 </Button>
-                <CartProducts products={cartProducts} />
+                <AddedProducts products={cartProducts} />
               </Fragment>
             ) : (
               <p className={s.add__error}>No products in this cart</p>
