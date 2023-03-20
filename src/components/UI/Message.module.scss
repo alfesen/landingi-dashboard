@@ -1,0 +1,14 @@
+.message {
+  position: absolute;
+  top: 2.7rem;
+  left: 50%;
+  translate: -50% 0;
+  z-index: 10000;
+  padding: 1em 2em;
+  max-width: 30rem;
+  color: white;
+  background-color: rgb(32, 170, 32);
+  &__error {
+    background-color: rgb(170, 32, 32);
+  }
+}
