@@ -26,6 +26,7 @@ export type CartsListItem = {
   id: number
   totalAmount: number
   totalProducts: number
+  addCartMode?: boolean
 }
 
 export type Card = {

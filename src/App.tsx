@@ -25,7 +25,7 @@ const App = (): JSX.Element => {
       <main className={s.app__main}>
         <CartContextProvider>
           <Suspense fallback={<Loading />}>
-            <CartsList setAddCart={showAddCart} />
+            <CartsList addCartMode={addCart} setAddCart={showAddCart} />
             {addCart ? <AddCart onCancel={hideAddCart} /> : <Cart />}
           </Suspense>
         </CartContextProvider>

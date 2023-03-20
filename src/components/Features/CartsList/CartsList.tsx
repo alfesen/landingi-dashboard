@@ -7,7 +7,7 @@ import { CartContext } from '../../../context/CartContext'
 import Fallback from '../../UI/Fallback'
 import Button from '../../UI/Button'
 
-const CartsList = ({ setAddCart }: { setAddCart: () => void }) => {
+const CartsList = ({ setAddCart, addCartMode }: { setAddCart: () => void, addCartMode: boolean }) => {
   const { getCartId, cartId, carts, loading, error, detachError } =
     useContext(CartContext)
 
@@ -28,6 +28,7 @@ const CartsList = ({ setAddCart }: { setAddCart: () => void }) => {
       <CartsListItem
         aria-label='cart-list-item'
         key={`${id}_cart_list_item_key`}
+        addCartMode={addCartMode}
         id={id}
         totalAmount={total}
         totalProducts={totalProducts}
