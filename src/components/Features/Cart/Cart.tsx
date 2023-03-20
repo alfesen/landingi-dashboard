@@ -110,9 +110,11 @@ const Cart = () => {
         ? renderProducts
         : !loading && <Fallback message={'No products in this cart'} dark />}
 
-      <div className={s.cart__chart}>
-        <Line data={data} options={options} />
-      </div>
+      {!loading && !error && (
+        <div className={s.cart__chart}>
+          <Line data={data} options={options} />
+        </div>
+      )}
     </section>
   )
 }
