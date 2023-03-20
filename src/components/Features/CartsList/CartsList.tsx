@@ -10,6 +10,7 @@ import Button from '../../UI/Button'
 const CartsList = ({ setAddCart }: { setAddCart: () => void }) => {
   const { getCartId, cartId, carts, loading, error, detachError } =
     useContext(CartContext)
+  console.log(loading)
 
   useEffect(() => {
     if (carts.length > 0) {

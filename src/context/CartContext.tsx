@@ -10,31 +10,31 @@ import { Cart } from '../types'
 
 interface CartContextInterface {
   cartId: number
-  getCartId: (cartId: number) => void
   showCart: boolean
-  showCartHandler: (bool: boolean) => void
   carts: Cart[]
-  addCartToCarts: (cart: Cart) => void
-  removeCart: (id: number) => void
-  showMessage: (message: string) => void
   message: string | null
   loading: boolean
   error: string | null
+  getCartId: (cartId: number) => void
+  showCartHandler: (bool: boolean) => void
+  addCartToCarts: (cart: Cart) => void
+  removeCart: (id: number) => void
+  showMessage: (message: string) => void
   detachError: () => void
 }
 
 export const CartContext = createContext<CartContextInterface>({
   cartId: 1,
-  getCartId: (cartId: number) => {},
   showCart: false,
-  showCartHandler: (bool: boolean) => {},
   carts: [],
-  addCartToCarts: (cart: Cart) => {},
-  removeCart: (id: number) => {},
-  showMessage: (message: string) => {},
   message: null,
   loading: false,
   error: null,
+  getCartId: (cartId: number) => {},
+  showCartHandler: (bool: boolean) => {},
+  addCartToCarts: (cart: Cart) => {},
+  removeCart: (id: number) => {},
+  showMessage: (message: string) => {},
   detachError: () => {},
 })
 
@@ -44,6 +44,7 @@ const CartContextProvider = ({ children }: { children: ReactNode }) => {
   const [showCart, setShowCart] = useState<boolean>(false)
   const [carts, setCarts] = useState<Cart[]>([])
   const [message, setMessage] = useState<string | null>(null)
+
   const highestId = Math.max(...carts.map(c => c.id))
   const lowestId = Math.min(...carts.map(c => c.id))
 
