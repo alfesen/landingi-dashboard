@@ -34,7 +34,6 @@ const Cart = () => {
 
   const renderProducts = products.map((p: Product) => (
     <ProductItem
-      aria-label='product-item'
       key={p.id}
       id={p.id}
       title={p.title}

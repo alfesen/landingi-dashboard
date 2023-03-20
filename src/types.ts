@@ -9,7 +9,6 @@ export type State = {
   message: string | null
 }
 
-
 export type Action =
   | { type: 'SET_ID'; payload: number }
   | { type: 'SHOW_CART'; payload: boolean }
