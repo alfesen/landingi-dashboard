@@ -1,4 +1,4 @@
-import { Fragment, useContext } from 'react'
+import { Fragment, useContext, useState } from 'react'
 import { CartContext } from '../../../context/CartContext'
 import { Product } from '../../../types'
 import Button from '../../UI/Button'
@@ -14,13 +14,23 @@ const AddCartOverlay = ({
   sendCart: () => void
 }) => {
   const { showCartHandler } = useContext(CartContext)
+  const [clicked, setClicked] = useState<boolean>(false)
+
+  const sendCartHandler = () => {
+    setClicked(true)
+    sendCart()
+  }
 
   return (
     <Overlay className={s.cart} onClose={() => showCartHandler(false)}>
       {cartProducts.length > 0 ? (
         <Fragment>
           <AddedProducts products={cartProducts} />
-          <Button danger onClick={sendCart} className={s.cart__confirm}>
+          <Button
+            disabled={clicked}
+            danger
+            onClick={sendCartHandler}
+            className={s.cart__confirm}>
             Send Cart
           </Button>
         </Fragment>

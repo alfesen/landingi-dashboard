@@ -18,6 +18,9 @@ interface CartContextInterface {
   removeCart: (id: number) => void
   showMessage: (message: string) => void
   message: string | null
+  loading: boolean
+  error: string | null
+  detachError: () => void
 }
 
 export const CartContext = createContext<CartContextInterface>({
@@ -30,15 +33,19 @@ export const CartContext = createContext<CartContextInterface>({
   removeCart: (id: number) => {},
   showMessage: (message: string) => {},
   message: null,
+  loading: false,
+  error: null,
+  detachError: () => {}
 })
 
 const CartContextProvider = ({ children }: { children: ReactNode }) => {
-  const { sendRequest } = useFetchData()
+  const { sendRequest, loading, error, detachError } = useFetchData()
   const [cartId, setCartId] = useState<number>(1)
   const [showCart, setShowCart] = useState<boolean>(false)
   const [carts, setCarts] = useState<Cart[]>([])
   const [message, setMessage] = useState<string | null>(null)
   const highestId = Math.max(...carts.map(c => c.id))
+  const lowestId = Math.min(...carts.map(c => c.id))
 
   useEffect(() => {
     const fetchData = async () => {
@@ -67,14 +74,24 @@ const CartContextProvider = ({ children }: { children: ReactNode }) => {
 
   const removeCart = useCallback(
     async (id: number) => {
-      setCurrentCart(id)
-      try {
-        await sendRequest(`https://dummyjson.com/carts/${id}`, 'DELETE')
+      if (id <= 20) {
+        const response = await sendRequest(
+          `https://dummyjson.com/cats/${id}`,
+          'DELETE'
+        )
+        if (response.isDeleted) {
+          setCarts(prevCarts => prevCarts.filter(c => c.id !== id))
+          showMessage('Cart successfully removed')
+        }
+      }
+      if (id > 20) {
+        if (cartId === id) setCurrentCart(lowestId)
+
         setCarts(prevCarts => prevCarts.filter(c => c.id !== id))
         showMessage('Cart successfully removed')
-      } catch (err: any) {}
+      }
     },
-    [sendRequest, setCurrentCart]
+    [sendRequest, lowestId, cartId, setCurrentCart]
   )
 
   const addCartToCarts = useCallback(
@@ -94,6 +111,9 @@ const CartContextProvider = ({ children }: { children: ReactNode }) => {
     removeCart,
     showMessage,
     message,
+    loading,
+    error,
+    detachError
   }
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>
