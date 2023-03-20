@@ -1,6 +1,7 @@
 import { Product } from '../../../types'
 import { countDiscount } from '../../../helpers'
 import ProductItem from '../shared/ProductItem'
+import s from './AddedProducts.module.scss'
 
 const CartProducts = ({ products }: { products: Product[] }) => {
   const renderCartProducts = products.map((p: Product) => {
@@ -20,7 +21,7 @@ const CartProducts = ({ products }: { products: Product[] }) => {
     )
   })
 
-  return <ul>{renderCartProducts}</ul>
+  return <ul className={s.products}>{renderCartProducts}</ul>
 }
 
 export default CartProducts

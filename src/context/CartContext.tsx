@@ -16,6 +16,8 @@ interface CartContextInterface {
   carts: Cart[]
   addCartToCarts: (cart: Cart) => void
   removeCart: (id: number) => void
+  showMessage: (message: string) => void
+  message: string | null
 }
 
 export const CartContext = createContext<CartContextInterface>({
@@ -26,6 +28,8 @@ export const CartContext = createContext<CartContextInterface>({
   carts: [],
   addCartToCarts: (cart: Cart) => {},
   removeCart: (id: number) => {},
+  showMessage: (message: string) => {},
+  message: null,
 })
 
 const CartContextProvider = ({ children }: { children: ReactNode }) => {
@@ -33,6 +37,7 @@ const CartContextProvider = ({ children }: { children: ReactNode }) => {
   const [cartId, setCartId] = useState<number>(1)
   const [showCart, setShowCart] = useState<boolean>(false)
   const [carts, setCarts] = useState<Cart[]>([])
+  const [message, setMessage] = useState<string | null>(null)
   const highestId = Math.max(...carts.map(c => c.id))
 
   useEffect(() => {
@@ -53,12 +58,20 @@ const CartContextProvider = ({ children }: { children: ReactNode }) => {
     setShowCart(bool)
   }, [])
 
+  const showMessage = (message: string) => {
+    setMessage(message)
+    setTimeout(() => {
+      setMessage(null)
+    }, 3000)
+  }
+
   const removeCart = useCallback(
     async (id: number) => {
       setCurrentCart(id)
       try {
         await sendRequest(`https://dummyjson.com/carts/${id}`, 'DELETE')
         setCarts(prevCarts => prevCarts.filter(c => c.id !== id))
+        showMessage('Cart successfully removed')
       } catch (err: any) {}
     },
     [sendRequest, setCurrentCart]
@@ -79,6 +92,8 @@ const CartContextProvider = ({ children }: { children: ReactNode }) => {
     carts,
     addCartToCarts,
     removeCart,
+    showMessage,
+    message,
   }
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>

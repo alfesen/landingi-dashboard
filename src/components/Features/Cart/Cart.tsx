@@ -105,7 +105,6 @@ const Cart = () => {
     <section className={s.cart}>
       {loading && <Loading dark />}
       {error && <Error onDetach={detachError} message={error} />}
-
       {!loading && !error && products.length > 0
         ? renderProducts
         : !loading && <Fallback message={'No products in this cart'} dark />}

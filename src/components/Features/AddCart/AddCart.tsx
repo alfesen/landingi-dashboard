@@ -5,12 +5,12 @@ import Button from '../../UI/Button'
 import Error from '../../UI/Error'
 import Fallback from '../../UI/Fallback'
 import Loading from '../../UI/Loading'
-import Overlay from '../../UI/Overlay'
 import ProductItem from '../shared/ProductItem'
 import { countDiscount } from '../../../helpers'
 import s from './AddCart.module.scss'
-import AddedProducts from './AddedProducts'
 import { CartContext } from '../../../context/CartContext'
+import AddCartOverlay from './AddCartOverlay'
+import Message from '../../UI/Message'
 
 const AddCart = ({
   onCancel,
@@ -21,7 +21,8 @@ const AddCart = ({
   const [products, setProducts] = useState<Product[]>([])
   const [cartProducts, setCartProducts] = useState<Product[]>([])
   const { loading, error, detachError, sendRequest } = useFetchData()
-  const { showCart, showCartHandler, addCartToCarts } = useContext(CartContext)
+  const { showCart, showCartHandler, addCartToCarts, showMessage, message } =
+    useContext(CartContext)
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -31,7 +32,7 @@ const AddCart = ({
     fetchProducts()
   }, [sendRequest])
 
-   const sendCart = async () => {
+  const sendCart = async () => {
     if (cartProducts.length === 0) {
       return alert('No products to send!')
     }
@@ -39,15 +40,16 @@ const AddCart = ({
       userId: Math.floor(Math.random() * 100),
       products: cartProducts,
     }
-    const cart = await sendRequest(
+    const cartToSend = await sendRequest(
       'https://dummyjson.com/carts/add',
       'POST',
       JSON.stringify(newCart),
       { 'Content-Type': 'application/json' }
     )
-    addCartToCarts(cart)
-    showCartHandler(false)
+    addCartToCarts(cartToSend)
+    showMessage('Cart sent successfully')
     setCartProducts([])
+    showCartHandler(false)
   }
 
   const renderProducts = products.map((p: Product) => {
@@ -82,19 +84,9 @@ const AddCart = ({
       <section className={s.add__products}>
         {loading && <Loading dark />}
         {error && <Error message={error} onDetach={detachError} />}
+        {message && <Message message={message} />}
         {showCart && (
-          <Overlay onClose={() => showCartHandler(false)}>
-            {cartProducts.length > 0 ? (
-              <Fragment>
-                <Button danger onClick={sendCart} className={s.cart__confirm}>
-                  Send Cart
-                </Button>
-                <AddedProducts products={cartProducts} />
-              </Fragment>
-            ) : (
-              <p className={s.add__error}>No products in this cart</p>
-            )}
-          </Overlay>
+          <AddCartOverlay sendCart={sendCart} cartProducts={cartProducts} />
         )}
         {!loading && !error && products.length > 0
           ? renderProducts
