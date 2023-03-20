@@ -49,6 +49,7 @@ const AddCart = ({
     showMessage('Cart sent successfully')
     setCartProducts([])
     showCartHandler(false)
+    onCancel()
   }
 
   const renderProducts = products.map((p: Product) => {
