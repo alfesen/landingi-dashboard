@@ -3,25 +3,10 @@ import {
   ReactNode,
   useCallback,
   useEffect,
-  useState,
+  useReducer,
 } from 'react'
 import useFetchData from '../hooks/useFetchData'
-import { Cart } from '../types'
-
-interface CartContextInterface {
-  cartId: number
-  showCart: boolean
-  carts: Cart[]
-  message: string | null
-  loading: boolean
-  error: string | null
-  getCartId: (cartId: number) => void
-  showCartHandler: (bool: boolean) => void
-  addCartToCarts: (cart: Cart) => void
-  removeCart: (id: number) => void
-  showMessage: (message: string) => void
-  detachError: () => void
-}
+import { Cart, Reducer, CartContextInterface, State, Action } from '../types'
 
 export const CartContext = createContext<CartContextInterface>({
   cartId: 1,
@@ -38,12 +23,33 @@ export const CartContext = createContext<CartContextInterface>({
   detachError: () => {},
 })
 
+const reducer = (state: State, action: Action): State => {
+  switch (action.type) {
+    case 'SHOW_CART':
+      return { ...state, showCart: action.payload }
+    case 'SET_ID':
+      return { ...state, cartId: action.payload }
+    case 'SET_CARTS':
+      state.carts = action.payload
+      return { ...state, carts: action.payload }
+    case 'SET_MESSAGE':
+      return { ...state, message: action.payload }
+    default:
+      return state
+  }
+}
+
 const CartContextProvider = ({ children }: { children: ReactNode }) => {
   const { sendRequest, loading, error, detachError } = useFetchData()
-  const [cartId, setCartId] = useState<number>(1)
-  const [showCart, setShowCart] = useState<boolean>(false)
-  const [carts, setCarts] = useState<Cart[]>([])
-  const [message, setMessage] = useState<string | null>(null)
+
+  const [{ showCart, cartId, carts, message }, dispatch] = useReducer<
+    Reducer<State, Action>
+  >(reducer, {
+    showCart: false,
+    cartId: 1,
+    carts: [],
+    message: null,
+  })
 
   const highestId = Math.max(...carts.map(c => c.id))
   const lowestId = Math.min(...carts.map(c => c.id))
@@ -52,24 +58,25 @@ const CartContextProvider = ({ children }: { children: ReactNode }) => {
     const fetchData = async () => {
       try {
         const { carts } = await sendRequest('https://dummyjson.com/carts')
-        setCarts(carts)
+        dispatch({ type: 'SET_CARTS', payload: carts })
       } catch (err) {}
     }
     fetchData()
   }, [sendRequest])
 
   const setCurrentCart = useCallback((cartId: number) => {
-    setCartId(cartId)
+    dispatch({ type: 'SET_ID', payload: cartId })
   }, [])
 
   const showCartHandler = useCallback((bool: boolean) => {
-    setShowCart(bool)
+    dispatch({ type: 'SHOW_CART', payload: bool })
   }, [])
 
   const showMessage = (message: string) => {
-    setMessage(message)
+    dispatch({ type: 'SET_MESSAGE', payload: message })
+
     setTimeout(() => {
-      setMessage(null)
+      dispatch({ type: 'SET_MESSAGE', payload: null })
     }, 3000)
   }
 
@@ -81,25 +88,33 @@ const CartContextProvider = ({ children }: { children: ReactNode }) => {
           'DELETE'
         )
         if (response.isDeleted) {
-          setCarts(prevCarts => prevCarts.filter(c => c.id !== id))
+          dispatch({
+            type: 'SET_CARTS',
+            payload: carts.filter(c => c.id !== id),
+          })
           showMessage('Cart successfully removed')
         }
       }
       if (id > 20) {
         if (cartId === id) setCurrentCart(lowestId)
-
-        setCarts(prevCarts => prevCarts.filter(c => c.id !== id))
+        dispatch({
+          type: 'SET_CARTS',
+          payload: carts.filter(c => c.id !== id),
+        })
         showMessage('Cart successfully removed')
       }
     },
-    [sendRequest, lowestId, cartId, setCurrentCart]
+    [cartId, lowestId, carts, sendRequest, setCurrentCart]
   )
 
   const addCartToCarts = useCallback(
     (cart: Cart): void => {
-      setCarts(prevCarts => [...prevCarts, { ...cart, id: highestId + 1 }])
+      dispatch({
+        type: 'SET_CARTS',
+        payload: [...carts, { ...cart, id: highestId + 1 }],
+      })
     },
-    [highestId]
+    [highestId, carts]
   )
 
   const value = {
@@ -107,7 +122,7 @@ const CartContextProvider = ({ children }: { children: ReactNode }) => {
     getCartId: setCurrentCart,
     showCart,
     showCartHandler,
-    carts,
+    carts: carts,
     addCartToCarts,
     removeCart,
     showMessage,

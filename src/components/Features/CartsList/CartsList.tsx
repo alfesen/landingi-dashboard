@@ -7,10 +7,15 @@ import { CartContext } from '../../../context/CartContext'
 import Fallback from '../../UI/Fallback'
 import Button from '../../UI/Button'
 
-const CartsList = ({ setAddCart, addCartMode }: { setAddCart: () => void, addCartMode: boolean }) => {
+const CartsList = ({
+  setAddCart,
+  addCartMode,
+}: {
+  setAddCart: () => void
+  addCartMode: boolean
+}) => {
   const { getCartId, cartId, carts, loading, error, detachError } =
     useContext(CartContext)
-  console.log(loading)
 
   useEffect(() => {
     if (carts.length > 0) {

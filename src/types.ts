@@ -1,5 +1,36 @@
 import { ReactNode } from 'react'
 
+export type Reducer<S, A> = (prevState: S, action: A) => S
+
+export type State = {
+  cartId: number
+  showCart: boolean
+  carts: Cart[]
+  message: string | null
+}
+
+
+export type Action =
+  | { type: 'SET_ID'; payload: number }
+  | { type: 'SHOW_CART'; payload: boolean }
+  | { type: 'SET_CARTS'; payload: Cart[] }
+  | { type: 'SET_MESSAGE'; payload: string | null }
+
+export interface CartContextInterface {
+  cartId: number
+  showCart: boolean
+  carts: Cart[]
+  message: string | null
+  loading: boolean
+  error: string | null
+  getCartId: (cartId: number) => void
+  showCartHandler: (bool: boolean) => void
+  addCartToCarts: (cart: Cart) => void
+  removeCart: (id: number) => void
+  showMessage: (message: string) => void
+  detachError: () => void
+}
+
 export type Product = {
   discountPercentage: number
   discountedPrice: number
