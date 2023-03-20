@@ -33,7 +33,8 @@ const CartContextProvider = ({ children }: { children: ReactNode }) => {
   const [cartId, setCartId] = useState<number>(1)
   const [showCart, setShowCart] = useState<boolean>(false)
   const [carts, setCarts] = useState<Cart[]>([])
-  
+  const highestId = Math.max(...carts.map(c => c.id))
+
   useEffect(() => {
     const fetchData = async () => {
       try {

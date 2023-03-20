@@ -97,7 +97,7 @@ const Cart = () => {
       price={p.price}
       discountPercentage={p.discountPercentage}
       discountedPrice={p.discountedPrice}
-      total={p.total}
+      total={p.discountedPrice}
     />
   ))
 
