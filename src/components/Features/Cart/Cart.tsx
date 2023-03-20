@@ -5,52 +5,16 @@ import ProductItem from '../shared/ProductItem'
 import { Product } from '../../../types'
 import Error from '../../UI/Error'
 import Loading from '../../UI/Loading'
+import Fallback from '../../UI/Fallback'
+import Message from '../../UI/Message'
+import LineChart from './LineChart'
 
 import s from './Cart.module.scss'
-import Fallback from '../../UI/Fallback'
-import { Line } from 'react-chartjs-2'
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js'
 
 const Cart = () => {
   const [products, setProducts] = useState<Product[]>([])
   const { sendRequest, error, loading, detachError } = useFetchData()
-  const { cartId, carts } = useContext(CartContext)
-
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-  )
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top' as const,
-      },
-      title: {
-        display: true,
-        text: 'Discount comparison',
-      },
-    },
-  }
-
-  const [data, setData] = useState<{ labels: any; datasets: any }>({
-    labels: [],
-    datasets: [{}, {}],
-  })
+  const { cartId, carts, message } = useContext(CartContext)
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -68,28 +32,9 @@ const Cart = () => {
     fetchProducts()
   }, [sendRequest, cartId, carts])
 
-  useEffect(() => {
-    setData({
-      labels: products.map((p: Product) => 'Product ' + p.id.toString()),
-      datasets: [
-        {
-          label: 'Price',
-          data: products.map((p: Product) => p.price * p.quantity!),
-          borderColor: 'rgb(255, 99, 132)',
-          backgroundColor: 'rgba(255, 99, 132, 0.5)',
-        },
-        {
-          label: 'Discounted Price',
-          data: products.map((p: Product) => p.discountedPrice),
-          borderColor: 'rgb(53, 162, 235)',
-          backgroundColor: 'rgba(53, 162, 235, 0.5)',
-        },
-      ],
-    })
-  }, [products])
-
   const renderProducts = products.map((p: Product) => (
     <ProductItem
+      aria-label='product-item'
       key={p.id}
       id={p.id}
       title={p.title}
@@ -103,17 +48,14 @@ const Cart = () => {
 
   return (
     <section className={s.cart}>
+      {message && <Message message={message} />}
       {loading && <Loading dark />}
       {error && <Error onDetach={detachError} message={error} />}
       {!loading && !error && products.length > 0
         ? renderProducts
         : !loading && <Fallback message={'No products in this cart'} dark />}
 
-      {!loading && !error && (
-        <div className={s.cart__chart}>
-          <Line data={data} options={options} />
-        </div>
-      )}
+      {!loading && !error && <LineChart products={products} />}
     </section>
   )
 }
