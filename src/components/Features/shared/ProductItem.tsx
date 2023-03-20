@@ -1,6 +1,9 @@
+import { useContext } from 'react'
+import { CartContext } from '../../../context/CartContext'
 import { Product } from '../../../types'
 import Button from '../../UI/Button'
 import Card from '../../UI/Card'
+
 
 import s from './ProductItem.module.scss'
 
@@ -15,6 +18,8 @@ const ProductItem = ({
   add,
   onAdd,
 }: Product) => {
+  const {showMessage} = useContext(CartContext)
+
   return (
     <Card className={s.product}>
       <h2 className={s.product__header}>
@@ -44,7 +49,12 @@ const ProductItem = ({
       {add && (
         <div className={s.product__actions}>
           {onAdd && (
-            <Button className={s.product__add} onClick={onAdd}>
+            <Button
+              className={s.product__add}
+              onClick={() => {
+                onAdd()
+                showMessage('Added product to cart')
+              }}>
               Add to Cart
             </Button>
           )}

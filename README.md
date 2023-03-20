@@ -1,3 +1,7 @@
+# Landingi Dashboard Test Task
+
+In this project I was trying to create the most functional, readable and user friendly dashboard, without the usage of such popular libraries as ReduxJS or React-Router-Dom. The main power of this project consists in native and custom react hooks. The only UI library I used (except React itself) was ChartJS for creating discount diagrams. For personal comfort I used also scss compiler for styling with scss-modules.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
