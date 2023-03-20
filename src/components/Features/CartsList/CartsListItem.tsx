@@ -5,7 +5,12 @@ import Button from '../../UI/Button'
 import s from './CartsListItem.module.scss'
 import RemoveModal from './RemoveModal'
 
-const CartsListItem = ({ id, totalProducts, totalAmount }: PropsType) => {
+const CartsListItem = ({
+  id,
+  totalProducts,
+  totalAmount,
+  addCartMode,
+}: PropsType) => {
   const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false)
   const { showCartHandler, getCartId, cartId, removeCart } =
     useContext(CartContext)
@@ -43,7 +48,9 @@ const CartsListItem = ({ id, totalProducts, totalAmount }: PropsType) => {
       <li
         onClick={getCart}
         key={id}
-        className={`${s.cart} ${cartId === id ? s.active : ''}`}>
+        className={`${s.cart} ${
+          !addCartMode && cartId === id ? s.active : ''
+        }`}>
         <h4>{id}</h4>
         <div>
           <p>
