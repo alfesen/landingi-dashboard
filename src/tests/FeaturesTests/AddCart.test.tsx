@@ -2,8 +2,7 @@ import { render, screen, within } from '@testing-library/react'
 import AddCart from '../../components/Features/AddCart/AddCart'
 
 const renderAddCart = async () => {
-  const mock = jest.fn()
-  render(<AddCart onCancel={mock} />)
+  render(<AddCart  />)
   const products = await screen.findAllByLabelText('card')
   const showCartBtn = screen.getByRole('button', { name: /show cart/i })
   const cancelCartBtn = screen.getByRole('button', { name: /cancel/i })
