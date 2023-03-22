@@ -7,14 +7,8 @@ import { CartContext } from '../../../context/CartContext'
 import Fallback from '../../UI/Fallback'
 import Button from '../../UI/Button'
 
-const CartsList = ({
-  setAddCart,
-  addCartMode,
-}: {
-  setAddCart: () => void
-  addCartMode: boolean
-}) => {
-  const { getCartId, cartId, carts, loading, error, detachError } =
+const CartsList = () => {
+  const { getCartId, cartId, carts, loading, error, detachError, addMode, setAddMode } =
     useContext(CartContext)
 
   useEffect(() => {
@@ -34,7 +28,7 @@ const CartsList = ({
       <CartsListItem
         aria-label='cart-list-item'
         key={`${id}_cart_list_item_key`}
-        addCartMode={addCartMode}
+        addCartMode={addMode}
         id={id}
         totalAmount={total}
         totalProducts={totalProducts}
@@ -46,7 +40,7 @@ const CartsList = ({
     <ul className={s.carts}>
       {loading && <Loading />}
       {!loading && (
-        <Button className={s.carts__button} onClick={setAddCart}>
+        <Button className={s.carts__button} onClick={() => setAddMode(true)}>
           Add Cart
         </Button>
       )}
