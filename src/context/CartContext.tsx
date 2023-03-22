@@ -15,12 +15,14 @@ export const CartContext = createContext<CartContextInterface>({
   message: null,
   loading: false,
   error: null,
+  addMode: false,
   getCartId: (cartId: number) => {},
   showCartHandler: (bool: boolean) => {},
   addCartToCarts: (cart: Cart) => {},
   removeCart: (id: number) => {},
   showMessage: (message: string) => {},
   detachError: () => {},
+  setAddMode: (mode: boolean) => {},
 })
 
 const reducer = (state: State, action: Action): State => {
@@ -34,6 +36,8 @@ const reducer = (state: State, action: Action): State => {
       return { ...state, carts: action.payload }
     case 'SET_MESSAGE':
       return { ...state, message: action.payload }
+    case 'CHANGE_MODE':
+      return { ...state, addMode: action.payload }
     default:
       return state
   }
@@ -42,13 +46,14 @@ const reducer = (state: State, action: Action): State => {
 const CartContextProvider = ({ children }: { children: ReactNode }) => {
   const { sendRequest, loading, error, detachError } = useFetchData()
 
-  const [{ showCart, cartId, carts, message }, dispatch] = useReducer<
+  const [{ showCart, cartId, carts, message, addMode }, dispatch] = useReducer<
     Reducer<State, Action>
   >(reducer, {
     showCart: false,
     cartId: 1,
     carts: [],
     message: null,
+    addMode: false,
   })
 
   const highestId = Math.max(...carts.map(c => c.id))
@@ -117,6 +122,10 @@ const CartContextProvider = ({ children }: { children: ReactNode }) => {
     [highestId, carts]
   )
 
+  const addModeHandler = (mode: boolean) => {
+    dispatch({ type: 'CHANGE_MODE', payload: mode })
+  }
+
   const value = {
     cartId,
     getCartId: setCurrentCart,
@@ -130,6 +139,8 @@ const CartContextProvider = ({ children }: { children: ReactNode }) => {
     loading,
     error,
     detachError,
+    addMode,
+    setAddMode: addModeHandler,
   }
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>

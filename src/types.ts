@@ -7,6 +7,7 @@ export type State = {
   showCart: boolean
   carts: Cart[]
   message: string | null
+  addMode: boolean
 }
 
 
@@ -15,6 +16,7 @@ export type Action =
   | { type: 'SHOW_CART'; payload: boolean }
   | { type: 'SET_CARTS'; payload: Cart[] }
   | { type: 'SET_MESSAGE'; payload: string | null }
+  | {type: 'CHANGE_MODE'; payload: boolean}
 
 export interface CartContextInterface {
   cartId: number
@@ -29,6 +31,8 @@ export interface CartContextInterface {
   removeCart: (id: number) => void
   showMessage: (message: string) => void
   detachError: () => void
+  addMode: boolean
+  setAddMode: (mode: boolean) => void
 }
 
 export type Product = {

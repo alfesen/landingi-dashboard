@@ -12,7 +12,7 @@ const CartsListItem = ({
   addCartMode,
 }: PropsType) => {
   const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false)
-  const { showCartHandler, getCartId, cartId, removeCart } =
+  const { showCartHandler, getCartId, cartId, removeCart, setAddMode } =
     useContext(CartContext)
 
   const getCart = (e: MouseEvent) => {
@@ -20,6 +20,7 @@ const CartsListItem = ({
     if (target.tagName.toLowerCase() !== 'button') {
       showCartHandler(false)
       getCartId(id)
+      setAddMode(false)
     }
   }
 

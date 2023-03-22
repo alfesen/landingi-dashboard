@@ -12,16 +12,18 @@ import { CartContext } from '../../../context/CartContext'
 import AddCartOverlay from './AddCartOverlay'
 import Message from '../../UI/Message'
 
-const AddCart = ({
-  onCancel,
-}: {
-  onCancel: () => void
-}) => {
+const AddCart = () => {
   const [products, setProducts] = useState<Product[]>([])
   const [cartProducts, setCartProducts] = useState<Product[]>([])
   const { loading, error, detachError, sendRequest } = useFetchData()
-  const { showCart, showCartHandler, addCartToCarts, showMessage, message } =
-    useContext(CartContext)
+  const {
+    showCart,
+    showCartHandler,
+    addCartToCarts,
+    showMessage,
+    message,
+    setAddMode,
+  } = useContext(CartContext)
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -49,7 +51,7 @@ const AddCart = ({
     showMessage('Cart sent successfully')
     setCartProducts([])
     showCartHandler(false)
-    onCancel()
+    setAddMode(false)
   }
 
   const renderProducts = products.map((p: Product) => {
@@ -100,12 +102,18 @@ const AddCart = ({
           Show Cart
         </Button>
         {!loading && !error && (
-          <Button danger className={s.actions__cancel} onClick={onCancel}>
+          <Button
+            danger
+            className={s.actions__cancel}
+            onClick={() => setAddMode(false)}>
             Cancel adding cart
           </Button>
         )}
         {error && (
-          <Button danger className={s.actions__cancel} onClick={onCancel}>
+          <Button
+            danger
+            className={s.actions__cancel}
+            onClick={() => setAddMode(false)}>
             Return to carts
           </Button>
         )}
