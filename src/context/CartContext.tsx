@@ -6,7 +6,14 @@ import {
   useReducer,
 } from 'react'
 import useFetchData from '../hooks/useFetchData'
-import { Cart, Reducer, CartContextInterface, State, Action } from '../types'
+import {
+  Cart,
+  Reducer,
+  CartContextInterface,
+  State,
+  Action,
+  CartsResponse,
+} from '../types'
 
 export const CartContext = createContext<CartContextInterface>({
   cartId: 1,
@@ -60,24 +67,26 @@ const CartContextProvider = ({ children }: { children: ReactNode }) => {
   const lowestId = Math.min(...carts.map(c => c.id))
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (): Promise<void> => {
       try {
-        const { carts } = await sendRequest('https://dummyjson.com/carts')
+        const { carts } = (await sendRequest(
+          'https://dummyjson.com/carts'
+        )) as unknown as CartsResponse
         dispatch({ type: 'SET_CARTS', payload: carts })
       } catch (err) {}
     }
     fetchData()
   }, [sendRequest])
 
-  const setCurrentCart = useCallback((cartId: number) => {
+  const setCurrentCart = useCallback((cartId: number): void => {
     dispatch({ type: 'SET_ID', payload: cartId })
   }, [])
 
-  const showCartHandler = useCallback((bool: boolean) => {
+  const showCartHandler = useCallback((bool: boolean): void => {
     dispatch({ type: 'SHOW_CART', payload: bool })
   }, [])
 
-  const showMessage = (message: string) => {
+  const showMessage = (message: string): void => {
     dispatch({ type: 'SET_MESSAGE', payload: message })
 
     setTimeout(() => {
@@ -86,12 +95,12 @@ const CartContextProvider = ({ children }: { children: ReactNode }) => {
   }
 
   const removeCart = useCallback(
-    async (id: number) => {
+    async (id: number): Promise<void> => {
       if (id <= 20) {
-        const response = await sendRequest(
+        const response = (await sendRequest(
           `https://dummyjson.com/carts/${id}`,
           'DELETE'
-        )
+        )) as Cart
         if (response.isDeleted) {
           dispatch({
             type: 'SET_CARTS',
@@ -122,7 +131,7 @@ const CartContextProvider = ({ children }: { children: ReactNode }) => {
     [highestId, carts]
   )
 
-  const addModeHandler = (mode: boolean) => {
+  const addModeHandler = (mode: boolean): void => {
     dispatch({ type: 'CHANGE_MODE', payload: mode })
   }
 

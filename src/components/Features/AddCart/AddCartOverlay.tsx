@@ -6,7 +6,7 @@ import Overlay from '../../UI/Overlay'
 import AddedProducts from './AddedProducts'
 import s from './AddCartOverlay.module.scss'
 
-const AddCartOverlay = ({ cartProducts, sendCart }: PropTypes) => {
+const AddCartOverlay = ({ cartProducts, sendCart }: PropTypes): JSX.Element => {
   const { showCartHandler } = useContext(CartContext)
   const [clicked, setClicked] = useState<boolean>(false)
 

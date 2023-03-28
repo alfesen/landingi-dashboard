@@ -10,12 +10,12 @@ const CartsListItem = ({
   totalProducts,
   totalAmount,
   addCartMode,
-}: PropsType) => {
+}: PropsType): JSX.Element => {
   const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false)
   const { showCartHandler, getCartId, cartId, removeCart, setAddMode } =
     useContext(CartContext)
 
-  const getCart = (e: MouseEvent) => {
+  const getCart = (e: MouseEvent): void => {
     const target = e.target as HTMLElement
     if (target.tagName.toLowerCase() !== 'button') {
       showCartHandler(false)
@@ -24,15 +24,15 @@ const CartsListItem = ({
     }
   }
 
-  const openModal = () => {
+  const openModal = (): void => {
     setShowConfirmDelete(true)
   }
 
-  const closeModal = () => {
+  const closeModal = (): void => {
     setShowConfirmDelete(false)
   }
 
-  const confirmDelete = () => {
+  const confirmDelete = (): void => {
     removeCart(id)
   }
 

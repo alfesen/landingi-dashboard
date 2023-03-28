@@ -1,5 +1,5 @@
 import s from './Header.module.scss'
-const Header = () => {
+const Header = (): JSX.Element => {
   return <h1 className={s.header}>TestDashboard</h1>
 }
 

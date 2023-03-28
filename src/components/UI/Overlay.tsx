@@ -13,7 +13,7 @@ type OverlayProps = {
   className?: string
 }
 
-const Backdrop = (props: BackdropProps) => {
+const Backdrop = (props: BackdropProps): JSX.Element => {
   return <div className={s.backdrop} onClick={props.onClose}></div>
 }
 

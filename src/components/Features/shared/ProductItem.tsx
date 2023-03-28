@@ -16,7 +16,7 @@ const ProductItem = ({
   quantity,
   add,
   onAdd,
-}: Product) => {
+}: Product): JSX.Element => {
   const { showMessage } = useContext(CartContext)
 
   return (

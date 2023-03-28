@@ -7,7 +7,7 @@ import { CartContext } from '../../../context/CartContext'
 import Fallback from '../../UI/Fallback'
 import Button from '../../UI/Button'
 
-const CartsList = () => {
+const CartsList = (): JSX.Element => {
   const { getCartId, cartId, carts, loading, error, detachError, addMode, setAddMode } =
     useContext(CartContext)
 
