@@ -7,7 +7,7 @@ const Button = ({
   className,
   danger,
   disabled,
-}: PropTypes) => {
+}: PropTypes): JSX.Element => {
   return (
     <button
       disabled={disabled}

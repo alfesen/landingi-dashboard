@@ -11,8 +11,9 @@ import s from './AddCart.module.scss'
 import { CartContext } from '../../../context/CartContext'
 import AddCartOverlay from './AddCartOverlay'
 import Message from '../../UI/Message'
+import { Cart } from '../../../types'
 
-const AddCart = () => {
+const AddCart = (): JSX.Element => {
   const [products, setProducts] = useState<Product[]>([])
   const [cartProducts, setCartProducts] = useState<Product[]>([])
   const { loading, error, detachError, sendRequest } = useFetchData()
@@ -26,14 +27,16 @@ const AddCart = () => {
   } = useContext(CartContext)
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      const { products } = await sendRequest('https://dummyjson.com/products')
+    const fetchProducts = async (): Promise<void> => {
+      const { products } = (await sendRequest(
+        'https://dummyjson.com/products'
+      )) as Cart
       setProducts(products)
     }
     fetchProducts()
   }, [sendRequest])
 
-  const sendCart = async () => {
+  const sendCart = async (): Promise<void> => {
     if (cartProducts.length === 0) {
       return alert('No products to send!')
     }
@@ -47,7 +50,7 @@ const AddCart = () => {
       JSON.stringify(newCart),
       { 'Content-Type': 'application/json' }
     )
-    addCartToCarts(cartToSend)
+    addCartToCarts(cartToSend as Cart)
     showMessage('Cart sent successfully')
     setCartProducts([])
     showCartHandler(false)
@@ -55,11 +58,12 @@ const AddCart = () => {
   }
 
   const renderProducts = products.map((p: Product) => {
-    const addProductToCart = () => {
-      const existingProduct = cartProducts.find(product => product.id === p.id)
+    const { id, title, price, discountPercentage, total } = p
+    const addProductToCart = (): void => {
+      const existingProduct = cartProducts.find(product => product.id === id)
       if (existingProduct) {
         const newCartProducts = [...cartProducts]
-        const index = newCartProducts.findIndex(product => product.id === p.id)
+        const index = newCartProducts.findIndex(product => product.id === id)
         newCartProducts[index].quantity = newCartProducts[index].quantity! + 1
         setCartProducts(newCartProducts)
         return
@@ -69,13 +73,13 @@ const AddCart = () => {
 
     return (
       <ProductItem
-        key={p.id}
-        id={p.id}
-        title={p.title}
-        price={p.price}
-        discountPercentage={p.discountPercentage}
-        discountedPrice={+countDiscount(p.price, p.discountPercentage)}
-        total={p.total}
+        key={id}
+        id={id}
+        title={title}
+        price={price}
+        discountPercentage={discountPercentage}
+        discountedPrice={+countDiscount(price, discountPercentage)}
+        total={total}
         add
         onAdd={addProductToCart}
       />

@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import useFetchData from '../../../hooks/useFetchData'
 import { CartContext } from '../../../context/CartContext'
 import ProductItem from '../shared/ProductItem'
-import { Product } from '../../../types'
+import { Cart as CartType, Product } from '../../../types'
 import Error from '../../UI/Error'
 import Loading from '../../UI/Loading'
 import Fallback from '../../UI/Fallback'
@@ -11,7 +11,7 @@ import LineChart from './LineChart'
 
 import s from './Cart.module.scss'
 
-const Cart = () => {
+const Cart = (): JSX.Element => {
   const [products, setProducts] = useState<Product[]>([])
   const { sendRequest, error, loading, detachError } = useFetchData()
   const { cartId, carts, message } = useContext(CartContext)
@@ -19,8 +19,10 @@ const Cart = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       if (cartId <= 20) {
-        const cart = await sendRequest(`https://dummyjson.com/carts/${cartId}`)
-        setProducts(cart.products)
+        const { products } = (await sendRequest(
+          `https://dummyjson.com/carts/${cartId}`
+        )) as CartType
+        setProducts(products)
       }
       return
     }

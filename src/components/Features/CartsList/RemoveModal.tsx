@@ -3,7 +3,7 @@ import Button from '../../UI/Button'
 import Overlay from '../../UI/Overlay'
 import s from './RemoveModal.module.scss'
 
-const RemoveModal = ({ onClose, id, totalAmount, onConfirm }: PropTypes) => {
+const RemoveModal = ({ onClose, id, totalAmount, onConfirm }: PropTypes): JSX.Element => {
   return (
     <Overlay onClose={onClose}>
       <header className={s.modal__header}>

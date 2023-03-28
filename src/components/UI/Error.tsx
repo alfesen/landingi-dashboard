@@ -1,7 +1,7 @@
 import { Error as PropTypes } from '../../types'
 import Button from './Button'
 import s from './Error.module.scss'
-const Error = ({ message, onDetach }: PropTypes) => {
+const Error = ({ message, onDetach }: PropTypes): JSX.Element => {
   return (
     <div className={s.error}>
       {message}

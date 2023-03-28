@@ -15,7 +15,7 @@ export type Action =
   | { type: 'SHOW_CART'; payload: boolean }
   | { type: 'SET_CARTS'; payload: Cart[] }
   | { type: 'SET_MESSAGE'; payload: string | null }
-  | {type: 'CHANGE_MODE'; payload: boolean}
+  | { type: 'CHANGE_MODE'; payload: boolean }
 
 export interface CartContextInterface {
   cartId: number
@@ -32,6 +32,13 @@ export interface CartContextInterface {
   detachError: () => void
   addMode: boolean
   setAddMode: (mode: boolean) => void
+}
+
+export type CartsResponse = {
+  carts: Cart[]
+  total: number
+  skipped: number
+  limit: number
 }
 
 export type Product = {
@@ -54,6 +61,7 @@ export type Cart = {
   totalProducts: number
   totalQuantity: number
   userId: number
+  isDeleted?: boolean
 }
 
 export type CartsListItem = {
